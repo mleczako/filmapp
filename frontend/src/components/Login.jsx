@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Register = () => {
+const Login = ({ onLogin }) => {
     const [formData, setFormData] = useState({
         username: '',
         password: ''
     });
-    const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -21,29 +20,27 @@ const Register = () => {
         e.preventDefault();
         setLoading(true);
         setError('');
-        setMessage('');
 
         try {
-            const response = await axios.post('http://localhost:5000/api/register', formData, {
+            const response = await axios.post('/api/login', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
             });
 
-            setMessage(response.data.message);
+            onLogin(response.data.user);
             setFormData({ username: '', password: '' });
         } catch (err) {
-            setError(err.response?.data?.error || 'Wystąpił błąd podczas rejestracji');
+            setError(err.response?.data?.error || 'Wystąpił błąd podczas logowania');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="register-container">
-            <h2>Rejestracja</h2>
+        <div className="login-container">
+            <h2>Logowanie</h2>
 
-            {message && <div className="success-message">{message}</div>}
             {error && <div className="error-message">{error}</div>}
 
             <form onSubmit={handleSubmit}>
@@ -56,6 +53,7 @@ const Register = () => {
                         value={formData.username}
                         onChange={handleChange}
                         required
+                        placeholder="Wprowadź nazwę użytkownika"
                     />
                 </div>
 
@@ -68,15 +66,16 @@ const Register = () => {
                         value={formData.password}
                         onChange={handleChange}
                         required
+                        placeholder="Wprowadź hasło"
                     />
                 </div>
 
                 <button type="submit" disabled={loading}>
-                    {loading ? 'Rejestrowanie...' : 'Zarejestruj się'}
+                    {loading ? 'Logowanie...' : 'Zaloguj się'}
                 </button>
             </form>
         </div>
     );
 };
 
-export default Register;
+export default Login;

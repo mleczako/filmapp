@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import './css/App.css';
 import { Routes, Route } from "react-router-dom"
 import MoviesPage from './pages/MoviesPage';
 import WatchedMoviesPage from './pages/WatchedPage';

@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
-const Register = () => {
+function LoginPage({ onLogin }) {
     const [formData, setFormData] = useState({
         username: '',
         password: ''
     });
-    const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -21,33 +20,31 @@ const Register = () => {
         e.preventDefault();
         setLoading(true);
         setError('');
-        setMessage('');
 
         try {
-            const response = await axios.post('/api/register', formData, {
+            const response = await axios.post('/api/login', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
             });
 
-            setMessage(response.data.message);
+            onLogin(response.data.user);
             setFormData({ username: '', password: '' });
         } catch (err) {
-            setError(err.response?.data?.error || 'Wystąpił błąd podczas rejestracji');
+            setError(err.response?.data?.error || 'Wystąpił błąd podczas logowania');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="register-container">
-            <h2>Rejestracja</h2>
+        <div>
+            <h2>Zaloguj sie</h2>
 
-            {message && <div className="success-message">{message}</div>}
-            {error && <div className="error-message">{error}</div>}
+            {error && <div>{error}</div>}
 
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
+                <div>
                     <label htmlFor="username">Nazwa użytkownika:</label>
                     <input
                         type="text"
@@ -59,8 +56,7 @@ const Register = () => {
                         placeholder="Wprowadź nazwę użytkownika"
                     />
                 </div>
-
-                <div className="form-group">
+                <div>
                     <label htmlFor="password">Hasło:</label>
                     <input
                         type="password"
@@ -70,16 +66,15 @@ const Register = () => {
                         onChange={handleChange}
                         required
                         placeholder="Wprowadź hasło"
-                        minLength="6"
                     />
                 </div>
 
                 <button type="submit" disabled={loading}>
-                    {loading ? 'Rejestrowanie...' : 'Zarejestruj się'}
+                    {loading ? 'Logowanie...' : 'Zaloguj się'}
                 </button>
             </form>
         </div>
     );
 };
 
-export default Register;
+export default LoginPage

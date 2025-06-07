@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import Register from './components/Register';
-import Login from './components/Login';
 import './App.css';
+import { Routes, Route } from "react-router-dom"
+import MoviesPage from './pages/MoviesPage';
+import WatchedMoviesPage from './pages/WatchedPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
 
 function App() {
   const [user, setUser] = useState(null);
-  const [currentView, setCurrentView] = useState('login');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedUser = localStorage.getItem('filmapp_user');
@@ -21,6 +27,7 @@ function App() {
   const handleLogin = (userData) => {
     setUser(userData);
     localStorage.setItem('filmapp_user', JSON.stringify(userData));
+    navigate("/");
   };
 
   const handleLogout = () => {
@@ -28,58 +35,55 @@ function App() {
     localStorage.removeItem('filmapp_user');
   };
 
-  const switchView = (view) => {
-    setCurrentView(view);
-  };
 
   if (user) {
     return (
-      <div className="App">
-        <header className="App-header">
-          <div className="user-info">
-            <h1>Film App</h1>
-            <p>Witaj, <strong>{user.username}</strong>!</p>
-            <button onClick={handleLogout} className="logout-btn">
+      <div>
+        <nav>
+          <div>
+            <Link to="/">
+              Film App
+            </Link>
+          </div>
+          <div>
+            <Link to="/">
+              Home
+            </Link>
+            <Link to="/watched">
+              Watched Movies
+            </Link>
+          </div>
+          <div>
+            <button onClick={handleLogout}>
               Wyloguj się
             </button>
           </div>
-        </header>
-
-        <main className="dashboard">
-          <div className="dashboard-content">
-            <h2>Dashboard</h2>
-          </div>
+        </nav>
+        <main>
+          <Routes>
+            <Route path="/" element={<MoviesPage />} />
+            <Route path="/watched" element={<WatchedMoviesPage />} />
+          </Routes>
         </main>
       </div>
     );
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Film App</h1>
-        <nav className="auth-nav">
-          <button
-            onClick={() => switchView('login')}
-            className={`nav-btn ${currentView === 'login' ? 'active' : ''}`}
-          >
-            Logowanie
-          </button>
-          <button
-            onClick={() => switchView('register')}
-            className={`nav-btn ${currentView === 'register' ? 'active' : ''}`}
-          >
-            Rejestracja
-          </button>
-        </nav>
-      </header>
-
-      <main className="auth-main">
-        {currentView === 'login' ? (
-          <Login onLogin={handleLogin} />
-        ) : (
-          <Register />
-        )}
+    <div>
+      <nav>
+        <Link to="/login">
+          Logowanie
+        </Link>
+        <Link to="/register">
+          Rejestracja
+        </Link>
+      </nav>
+      <main>
+        <Routes>
+          <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
       </main>
     </div>
   );

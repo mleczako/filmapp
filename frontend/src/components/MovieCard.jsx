@@ -4,10 +4,10 @@ function MovieCard({ movie }) {
     }
     return (
         <div>
-            <img src="" alt={movie.title} />
-            <button onClick={onAddToWatchedClick}> Dodaj do obejrzanych</button>
-            <h3>{movie.title}</h3>
-            <h5>{movie.release_date}</h5>
+            <img src={movie.Poster} />
+            <h3>{movie.Title}</h3>
+            <h5>{movie.Year}</h5>
+            <button onClick={onAddToWatchedClick}> <h4>Dodaj do obejrzanych</h4></button>
         </div>
     )
 }

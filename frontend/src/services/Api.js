@@ -7,11 +7,12 @@ import { BASE_URL } from "./Key.js"
 stuktura pliku:
 
 const API_KEY = ""
-const BASE_URL = ""`
+export const BASE_URL = `http://www.omdbapi.com/?apikey=${API_KEY}`
 */
 
-export const getIronManMovie = async () => {
-    const response = await fetch(`${BASE_URL}/?t=Iron+Man`)
+export const getDefaultMovies = async () => {
+    const response = await fetch(`${BASE_URL}&s=Avengers`)
     const data = await response.json()
-    return data.results
+    return data.Search
 };
+

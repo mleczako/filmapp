@@ -5,6 +5,7 @@ import MoviesPage from './pages/MoviesPage';
 import WatchedMoviesPage from './pages/WatchedPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import AssistantPage from './pages/AssistantPage';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
@@ -46,6 +47,9 @@ function App() {
             <Link to="/watched">
               Watched
             </Link>
+            <Link to="/assistant"> 
+              Asystent Filmowy
+            </Link>
             <button onClick={handleLogout}>
               Wyloguj się
             </button>
@@ -55,6 +59,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MoviesPage />} />
             <Route path="/watched" element={<WatchedMoviesPage />} />
+            <Route path="/assistant" element={<AssistantPage />} /> 
           </Routes>
         </main>
       </div>
@@ -75,6 +80,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/assistant" element={<AssistantPage />} />
         </Routes>
       </main>
     </div>

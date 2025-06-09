@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from app.routes.recommend import recommend_bp 
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -25,5 +26,8 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+    
+
+    app.register_blueprint(recommend_bp, url_prefix='/')
 
     return app

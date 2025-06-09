@@ -22,3 +22,9 @@ export const getMoviesBySearch = async (searchQuery) => {
     const data = await response.json()
     return data.Search
 };
+
+export const getMovieById = async (id) => {
+    const response = await fetch(`${BASE_URL}&i=${encodeURIComponent(id)}`)
+    const data = await response.json()
+    return data
+}

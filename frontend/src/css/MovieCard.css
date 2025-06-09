@@ -1,15 +1,46 @@
 .movie-card {
     text-align: center;
     width: 200px;
+    height: 420px;
+    position: relative;
+    background-color: black;
+    border-radius: 15px;
+    margin: 1px;
+}
+
+.movie-card:hover {
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    cursor: pointer;
+    margin: 0px;
 }
 
 .poster {
-    width: 200px;
-    height: 300px;
+    padding: 10px;
+    width: 180px;
+    height: 260px;
 }
 
 .title {
+    padding: 10px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.watched-button {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background-color: rgba(0, 0, 0, 0.674);
+    border-color: transparent;
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: 15px;
+    border-color: transparent;
+}
+
+.watched-button:hover {
+    background-color: black;
+    cursor: pointer;
 }

@@ -20,6 +20,9 @@ def create_app():
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp, url_prefix="/api")
 
+    from app.routes.watched_routes import watched_bp 
+    app.register_blueprint(watched_bp) 
+    
     from app.models.user import User
 
     @login_manager.user_loader

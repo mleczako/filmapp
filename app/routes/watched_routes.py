@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
-from models import WatchedMovie
+#from models import WatchedMovie
+from app.models.watched_movie import WatchedMovie
 from database import db_session
 
 watched_bp = Blueprint('watched', __name__, url_prefix="/api/watched")

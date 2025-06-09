@@ -35,25 +35,17 @@ function App() {
     localStorage.removeItem('filmapp_user');
   };
 
-
   if (user) {
     return (
       <div>
         <nav>
           <div>
-            <Link to="/">
-              Film App
-            </Link>
-          </div>
-          <div>
-            <Link to="/">
+            <Link reloadDocument to="/">
               Home
             </Link>
             <Link to="/watched">
-              Watched Movies
+              Watched
             </Link>
-          </div>
-          <div>
             <button onClick={handleLogout}>
               Wyloguj się
             </button>

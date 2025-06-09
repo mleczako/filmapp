@@ -1,0 +1,15 @@
+.movie-card {
+    text-align: center;
+    width: 200px;
+}
+
+.poster {
+    width: 200px;
+    height: 300px;
+}
+
+.title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import MovieCard from "../components/MovieCard"
 import { getDefaultMovies, getMoviesBySearch } from "../services/Api"
+import '../css/MoviesPage.css';
 
 
 function MoviesPage() {
@@ -24,6 +25,7 @@ function MoviesPage() {
         } finally {
             setLoading(false)
         }
+        setSearchQuery("")
     }
 
     useEffect(() => {
@@ -56,7 +58,7 @@ function MoviesPage() {
                 <div>
                     Loading..
                 </div> :
-                <div>
+                <div className="movie-grid">
                     {movies.map((movie) => (<MovieCard movie={movie} key={movie.imdbID} />))}
                 </div>
             }

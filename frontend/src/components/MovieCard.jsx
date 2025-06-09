@@ -2,7 +2,12 @@ import axios from "axios";
 import "../css/MovieCard.css";
 
 function MovieCard({ movie }) {
-    async function onAddToWatchedClick() {
+    const onInfoClick = () => {
+        alert("info clik")
+    }
+
+    async function onAddToWatchedClick(e) {
+        e.stopPropagation()
         const storedUser = localStorage.getItem('filmapp_user');
         if (!storedUser) {
             alert("Zaloguj się, aby dodać film.");
@@ -36,13 +41,11 @@ function MovieCard({ movie }) {
     }
 
     return (
-        <div className="movie-card">
+        <div className="movie-card" onClick={onInfoClick}>
             <img className="poster" src={movie.Poster || ""} alt={movie.Title || "Brak tytułu"} />
+            <div><button className="watched-button" onClick={onAddToWatchedClick}> <h4>add to watched</h4></button></div>
             <h3 className="title">{movie.Title || "Brak tytułu"}</h3>
             <h5>{movie.Year || "Brak daty"}</h5>
-            <button onClick={onAddToWatchedClick}>
-                <h4>Dodaj do obejrzanych</h4>
-            </button>
         </div>
     );
 }

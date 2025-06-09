@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
 import { getDefaultMovies, getMoviesBySearch } from "../services/Api";
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import '../css/MoviesPage.css';
 
 function MoviesPage() {
-    const [movies, setMovies] = useState([]); 
-    const [error, setError] = useState(null); 
-    const [loading, setLoading] = useState(true); 
-    const [searchQuery, setSearchQuery] = useState(""); 
+    const [movies, setMovies] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const onSearchSubmit = async (e) => {
         e.preventDefault();
         if (!searchQuery.trim()) return;
         setLoading(true);
         try {
-            const fetchedMovies = await getMoviesBySearch(searchQuery); 
+            const fetchedMovies = await getMoviesBySearch(searchQuery);
             setMovies(fetchedMovies);
             setError(null);
         } catch (err) {
@@ -49,9 +49,9 @@ function MoviesPage() {
 
             <div className="nav-buttons">
                 <Link to="/watched">
-                    <button>Watched</button> 
+                    <button>Watched</button>
                 </Link>
-                <Link to="/assistant"> 
+                <Link to="/assistant">
                     <button>Asystent Filmowy</button>
                 </Link>
             </div>

@@ -2,5 +2,27 @@
     justify-content: center;
     display: flex;
     flex-wrap: wrap;
-    gap: 30px
+    gap: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.search-box {
+    width: 300px;
+    height: 40px;
+    padding-left: 10px;
+    background-color: black;
+}
+
+.search-button {
+    margin: 0px;
+    width: 80px;
+    height: 45px;
+    background-color: black;
+    border: solid;
+    border-width: 0px;
+}
+
+.search-button:hover {
+    cursor: pointer;
 }

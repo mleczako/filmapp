@@ -47,7 +47,7 @@ function App() {
             <Link to="/watched">
               Watched
             </Link>
-            <Link to="/assistant"> 
+            <Link to="/assistant">
               Asystent Filmowy
             </Link>
             <button onClick={handleLogout}>
@@ -59,7 +59,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MoviesPage />} />
             <Route path="/watched" element={<WatchedMoviesPage />} />
-            <Route path="/assistant" element={<AssistantPage />} /> 
+            <Route path="/assistant" element={<AssistantPage />} />
           </Routes>
         </main>
       </div>
@@ -68,7 +68,7 @@ function App() {
 
   return (
     <div>
-      <nav>
+      <nav className='navbar'>
         <Link to="/login">
           Logowanie
         </Link>

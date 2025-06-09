@@ -20,12 +20,8 @@ def chat():
     user_input = data.get("message")
     history = data.get("history", [])
 
-    print(f"Received user input: {user_input}") 
-    
     try:
         reply, updated_history = film_chat(user_input, history)
-        print(f"Sending reply: {reply}")  # Debugowanie
-
         return jsonify({
             "reply": reply,
             "history": updated_history

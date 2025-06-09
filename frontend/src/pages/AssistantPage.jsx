@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 function AssistantPage() {
-    const [messages, setMessages] = useState([]); // Trzymamy historię wiadomości
-    const [inputMessage, setInputMessage] = useState(""); // Wiadomość użytkownika
-    const [loading, setLoading] = useState(false); // Stan ładowania odpowiedzi
+    const [messages, setMessages] = useState([]);
+    const [inputMessage, setInputMessage] = useState(""); 
+    const [loading, setLoading] = useState(false); 
 
     const sendMessage = async () => {
-        if (!inputMessage.trim()) return; // Jeśli pole tekstowe puste, nic nie wysyłamy
+        if (!inputMessage.trim()) return; 
 
         setMessages((prevMessages) => [
             ...prevMessages,
@@ -15,22 +15,19 @@ function AssistantPage() {
         setLoading(true);
         setInputMessage("");
 
-        // Wywołanie API do backendu
         try {
-            console.log("Wysyłanie zapytania do backendu...");
-            const response = await fetch("http://localhost:5000/chat", { // Zakładając, że masz /chat endpoint w backendzie
+            const response = await fetch("http://localhost:5000/chat", { 
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ message: inputMessage, history: messages }), // Wysyłamy wiadomości i historię
+                body: JSON.stringify({ message: inputMessage, history: messages }), 
             });
 
-            console.log("Odpowiedź z backendu:", response);
             const data = await response.json();
             setMessages((prevMessages) => [
                 ...prevMessages,
-                { role: "assistant", content: data.reply }, // Odpowiedź z backendu
+                { role: "assistant", content: data.reply }, 
             ]);
         } catch (error) {
             console.error("Błąd:", error);

@@ -1,49 +1,70 @@
 import axios from "axios";
 import "../css/MovieCard.css";
+import { useState } from "react";
+import StarRatings from "react-star-ratings";
 
 function MovieCard({ movie }) {
-    const onInfoClick = () => {
-        alert("info clik")
-    }
+    const [showRating, setShowRating] = useState(false);
+    const [highlighted, setHighlighted] = useState(false);
 
-    async function onAddToWatchedClick(e) {
-        e.stopPropagation()
+    const onInfoClick = () => {
+        alert("info clik");
+    };
+
+    const handleRatingSelect = async (rating) => {
         const storedUser = localStorage.getItem('filmapp_user');
-        if (!storedUser) {
+        if (!storedUser || !movie?.Title) {
             alert("Zaloguj się, aby dodać film.");
             return;
         }
 
         const user = JSON.parse(storedUser);
         const userId = user.id;
-        const rating = prompt("Podaj ocenę (1–10):");
-
-        if (!rating || !movie?.Title) {
-            alert("Brakuje danych filmu.");
-            return;
-        }
 
         try {
             await axios.post("http://localhost:5000/api/watched/", {
                 user_id: userId,
                 title: movie.Title,
-                rating: parseFloat(rating),
+                rating: rating
             }, {
                 headers: {
                     "Content-Type": "application/json"
                 }
             });
-            alert("Film dodany!");
+            setShowRating(false);
+            setHighlighted(true);
+            setTimeout(() => setHighlighted(false), 3000);
         } catch (error) {
             console.error("Błąd dodawania:", error);
             alert("Błąd dodawania filmu");
         }
-    }
+    };
 
     return (
-        <div className="movie-card" onClick={onInfoClick}>
+        <div className={movie-card ${highlighted ? "highlight" : ""}} onClick={onInfoClick}>
             <img className="poster" src={movie.Poster || ""} alt={movie.Title || "Brak tytułu"} />
-            <div><button className="watched-button" onClick={onAddToWatchedClick}> <h4>add to watched</h4></button></div>
+            <div>
+                <button className="watched-button" onClick={(e) => {
+                    e.stopPropagation();
+                    setShowRating(!showRating);
+                }}>
+                    <h4>add to watched</h4>
+                </button>
+                {showRating && (
+                    <div className="rating-stars">
+                        <StarRatings
+                            rating={0}
+                            starRatedColor="gold"
+                            starHoverColor="orange"
+                            changeRating={(rating) => handleRatingSelect(rating)}
+                            numberOfStars={5}
+                            name={rating-${movie.imdbID}}
+                            starDimension="24px"
+                            starSpacing="2px"
+                        />
+                    </div>
+                )}
+            </div>
             <h3 className="title">{movie.Title || "Brak tytułu"}</h3>
             <h5>{movie.Year || "Brak daty"}</h5>
         </div>

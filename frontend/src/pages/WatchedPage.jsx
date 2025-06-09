@@ -1,8 +1,11 @@
+
 import { useEffect, useState } from "react";
 import axios from "axios";
+import StarRatings from "react-star-ratings";
 
 function WatchedPage() {
     const [watched, setWatched] = useState([]);
+    const [editId, setEditId] = useState(null);  // ID aktualnie edytowanego filmu
 
     useEffect(() => {
         const storedUser = localStorage.getItem('filmapp_user');
@@ -16,19 +19,17 @@ function WatchedPage() {
             .catch((err) => console.error("Błąd pobierania obejrzanych:", err));
     }, []);
 
-    const handleEdit = async (id) => {
-        const newRating = prompt("Podaj nową ocenę (1–10):");
-        if (!newRating) return;
-
+    const handleRatingChange = async (newRating, movieId) => {
         try {
-            await axios.put(`http://localhost:5000/api/watched/${id}`, {
-                rating: parseFloat(newRating)
+            await axios.put(`http://localhost:5000/api/watched/${movieId}`, {
+                rating: newRating
             });
             setWatched(prev =>
-                prev.map((m) => (m.id === id ? { ...m, rating: parseFloat(newRating) } : m))
+                prev.map((m) => (m.id === movieId ? { ...m, rating: newRating } : m))
             );
+            setEditId(null);
         } catch (err) {
-            alert("Błąd edytowania oceny");
+            alert("Błąd aktualizacji oceny");
         }
     };
 
@@ -43,13 +44,29 @@ function WatchedPage() {
 
     return (
         <div>
-            <h1>Watched Movies</h1>
+            <h1>Obejrzane filmy</h1>
             <ul>
                 {watched.map((movie) => (
                     <li key={movie.id}>
-                        {movie.title} – ocena: {movie.rating}{" "}
-                        <button onClick={() => handleEdit(movie.id)}>Edytuj</button>{" "}
-                        <button onClick={() => handleDelete(movie.id)}>Usuń</button>
+                        <strong>{movie.title}</strong> – 
+                        <StarRatings
+                            rating={movie.rating || 0}
+                            starRatedColor="gold"
+                            starHoverColor="orange"
+                            changeRating={(rating) =>
+                                editId === movie.id ? handleRatingChange(rating, movie.id) : null
+                            }
+                            numberOfStars={5}
+                            name={`rating-${movie.id}`}
+                            starDimension="24px"
+                            starSpacing="2px"
+                        />
+                        {editId === movie.id ? (
+                            <button onClick={() => setEditId(null)}>Anuluj</button>
+                        ) : (
+                            <button onClick={() => setEditId(movie.id)}>✏️ Edytuj</button>
+                        )}
+                        <button onClick={() => handleDelete(movie.id)}>🗑️ Usuń</button>
                     </li>
                 ))}
             </ul>

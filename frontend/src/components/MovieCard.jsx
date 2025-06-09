@@ -23,6 +23,10 @@ function MovieCard({ movie }) {
                 user_id: userId,
                 title: movie.Title,
                 rating: parseFloat(rating),
+            }, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
             });
             alert("Film dodany!");
         } catch (error) {

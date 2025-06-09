@@ -39,21 +39,19 @@ function App() {
   if (user) {
     return (
       <div>
-        <nav>
-          <div>
-            <Link reloadDocument to="/">
-              Home
-            </Link>
-            <Link to="/watched">
-              Watched
-            </Link>
-            <Link to="/assistant">
-              Asystent Filmowy
-            </Link>
-            <button onClick={handleLogout}>
-              Wyloguj się
-            </button>
-          </div>
+        <nav className='navbar'>
+          <Link reloadDocument to="/">
+            Home
+          </Link>
+          <Link to="/watched">
+            Watched
+          </Link>
+          <Link to="/assistant">
+            Asystent Filmowy
+          </Link>
+          <button onClick={handleLogout}>
+            Wyloguj się
+          </button>
         </nav>
         <main>
           <Routes>
@@ -80,7 +78,6 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/assistant" element={<AssistantPage />} />
         </Routes>
       </main>
     </div>

@@ -11,20 +11,21 @@ def get_watched():
     movies = db.session.query(WatchedMovie).filter_by(user_id=user_id).all()
     return jsonify([{"id": m.id, "title": m.title, "rating": m.rating} for m in movies])
 
-# @watched_bp.route("/", methods=["POST"])
-# def add_watched():
-#     data = request.get_json()
-#     title = data.get("title")
-#     rating = data.get("rating")
-#     user_id = data.get("user_id")
+@watched_bp.route("/", methods=["POST"])
+def add_watched():
+    data = request.get_json()
+    title = data.get("title")
+    rating = data.get("rating")
+    user_id = data.get("user_id")
 
-#     if not title or rating is None or not user_id:
-#         return jsonify({"error": "Brakuje danych"}), 400
+    if not title or rating is None or not user_id:
+        return jsonify({"error": "Brakuje danych"}), 400
 
     movie = WatchedMovie(title=title, rating=rating, user_id=user_id)
     db.session.add(movie)
     db.session.commit()
     return jsonify({"message": "Film dodany"}), 201
+
 @watched_bp.route('/<int:movie_id>', methods=['PUT'])
 def update_rating(movie_id):
     data = request.get_json()

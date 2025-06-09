@@ -45,25 +45,16 @@ function MoviesPage() {
 
     return (
         <div>
-            <h1>Filmy</h1>
-
-            <div className="nav-buttons">
-                <Link to="/watched">
-                    <button>Watched</button>
-                </Link>
-                <Link to="/assistant">
-                    <button>Asystent Filmowy</button>
-                </Link>
-            </div>
-
-            <form onSubmit={onSearchSubmit} className="search-form">
+            <h1>Movies</h1>
+            <form onSubmit={onSearchSubmit}>
                 <input
+                    className="search-box"
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Szukaj filmów..."
                 />
-                <button type="submit">Szukaj</button>
+                <button type="submit" className="search-button">Szukaj</button>
             </form>
 
             {error && <div className="error-message">{error}</div>}

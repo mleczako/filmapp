@@ -16,3 +16,9 @@ export const getDefaultMovies = async () => {
     return data.Search
 };
 
+
+export const getMoviesBySearch = async (searchQuery) => {
+    const response = await fetch(`${BASE_URL}&s=${encodeURIComponent(searchQuery)}`)
+    const data = await response.json()
+    return data.Search
+};

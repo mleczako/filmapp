@@ -24,7 +24,14 @@ def add_watched():
     movie = WatchedMovie(title=title, rating=rating, user_id=user_id)
     db.session.add(movie)
     db.session.commit()
-    return jsonify({"message": "Film dodany"}), 201
+    return jsonify({
+    "message": "Film dodany",
+    "movie": {
+        "id": movie.id,
+        "title": movie.title,
+        "rating": movie.rating
+    }
+}), 201
 
 @watched_bp.route('/<int:movie_id>', methods=['PUT'])
 def update_rating(movie_id):

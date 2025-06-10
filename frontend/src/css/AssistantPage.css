@@ -1,0 +1,87 @@
+/* Styl główny czatu */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 120px);  /* Ustalamy wysokość kontenera czatu */
+    width: 100%;
+    padding: 10px;
+    background-color: #2d2d2d;
+    color: white;
+    border-radius: 10px;
+    overflow: hidden; /* Ukrywamy wszystko poza kontenerem */
+    margin: 0; /* Usuwamy marginesy */
+}
+
+/* Pasek tytułowy */
+h1 {
+    font-size: 20px;  /* Zmniejszamy rozmiar czcionki */
+    margin: 10px 0;   /* Dajemy trochę przestrzeni */
+    text-align: center; /* Wyśrodkowanie tytułu */
+}
+
+/* Kontener czatu z przewijaniem */
+.chat-box {
+    flex: 1; /* Zajmuje całą dostępną przestrzeń */
+    overflow-y: auto; /* Umożliwia przewijanie w pionie */
+    padding-right: 15px; /* Umożliwiamy trochę przestrzeni na pasek przewijania */
+    margin-right: 15px;   /* Przesuwamy pasek przewijania w lewo */
+    display: flex;
+    flex-direction: column; /* Usuwamy reverse, by nowe wiadomości pojawiały się na dole */
+    margin-bottom: 0; /* Usuwamy margines u dołu */
+}
+
+/* Styl wiadomości */
+.message {
+    background-color: #444444;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    width: fit-content;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+/* Styl wiadomości użytkownika (po prawej stronie) */
+.message.user {
+    background-color: #0066cc;
+    align-self: flex-end;  /* Ustawiamy wiadomości użytkownika na prawo */
+    text-align: right; /* Ustawiamy tekst w prawo */
+}
+
+/* Styl wiadomości asystenta (po lewej stronie) */
+.message.assistant {
+    background-color: #444444;
+    align-self: flex-start;  /* Ustawiamy wiadomości asystenta na lewo */
+    text-align: left; /* Ustawiamy tekst w lewo */
+}
+
+/* Pole tekstowe do wprowadzania wiadomości */
+.input-container {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+    width: 100%;
+}
+
+.input-container input {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #333;
+    color: white;
+}
+
+.input-container button {
+    width: 15%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.input-container button:disabled {
+    background-color: #ccc;
+}

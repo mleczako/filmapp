@@ -58,7 +58,7 @@ function MovieCard({ movie }) {
                             starHoverColor="orange"
                             changeRating={(rating) => handleRatingSelect(rating)}
                             numberOfStars={5}
-                            name={rating-${movie.imdbID}}
+                            name={\rating-${movie.imdbID}}
                             starDimension="24px"
                             starSpacing="2px"
                         />

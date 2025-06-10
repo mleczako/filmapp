@@ -1,6 +1,6 @@
 from flask import Blueprint, Flask, request, jsonify
 from flask_cors import CORS
-from app.models.chat import film_chat  # Importuj funkcję z `chat.py`
+from app.models.chat import film_chat  
 
 recommend_bp = Blueprint('recommend', __name__)
 

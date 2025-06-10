@@ -1,63 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import './css/App.css';
-import { Routes, Route } from "react-router-dom"
-import MoviesPage from './pages/MoviesPage';
-import WatchedMoviesPage from './pages/WatchedPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import AssistantPage from './pages/AssistantPage';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "./css/App.css";
+import { Routes, Route } from "react-router-dom";
+import MoviesPage from "./pages/MoviesPage";
+import WatchedMoviesPage from "./pages/WatchedPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import AssistantPage from "./pages/AssistantPage";
+import StatsPage from "./pages/StatsPage";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
 
 function App() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('filmapp_user');
+    const savedUser = localStorage.getItem("filmapp_user");
     if (savedUser) {
       try {
         setUser(JSON.parse(savedUser));
       } catch (error) {
-        localStorage.removeItem('filmapp_user');
+        localStorage.removeItem("filmapp_user");
       }
     }
   }, []);
 
   const handleLogin = (userData) => {
     setUser(userData);
-    localStorage.setItem('filmapp_user', JSON.stringify(userData));
+    localStorage.setItem("filmapp_user", JSON.stringify(userData));
     navigate("/");
   };
 
   const handleLogout = () => {
     setUser(null);
-    localStorage.removeItem('filmapp_user');
+    localStorage.removeItem("filmapp_user");
   };
 
   if (user) {
     return (
       <div>
-        <nav className='navbar'>
+        <nav className="navbar">
           <Link reloadDocument to="/">
-            Home
+            Strona główna
           </Link>
-          <Link to="/watched">
-            Watched
-          </Link>
-          <Link to="/assistant">
-            Asystent Filmowy
-          </Link>
-          <button onClick={handleLogout}>
-            Wyloguj się
-          </button>
+          <Link to="/watched">Obejrzane</Link>
+          <Link to="/assistant">Asystent Filmowy</Link>
+          <Link to="/stats">Statystyki</Link>
+          <button onClick={handleLogout}>Wyloguj się</button>
         </nav>
         <main>
           <Routes>
             <Route path="/" element={<MoviesPage />} />
             <Route path="/watched" element={<WatchedMoviesPage />} />
             <Route path="/assistant" element={<AssistantPage />} />
+            <Route path="/stats" element={<StatsPage />} />
           </Routes>
         </main>
       </div>
@@ -66,13 +62,9 @@ function App() {
 
   return (
     <div>
-      <nav className='navbar'>
-        <Link to="/login">
-          Logowanie
-        </Link>
-        <Link to="/register">
-          Rejestracja
-        </Link>
+      <nav className="navbar">
+        <Link to="/login">Logowanie</Link>
+        <Link to="/register">Rejestracja</Link>
       </nav>
       <main>
         <Routes>
@@ -85,7 +77,6 @@ function App() {
 }
 
 export default App;
-
 
 // import { useState } from 'react'
 // import reactLogo from './assets/react.svg'

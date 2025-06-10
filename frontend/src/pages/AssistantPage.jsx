@@ -1,23 +1,21 @@
 import { useState, useRef, useEffect } from "react";
-import '../css/AssistantPage.css'; // Importujemy plik CSS
+import '../css/AssistantPage.css';
 
 function AssistantPage() {
-    const [messages, setMessages] = useState([]); // Historia wiadomości
-    const [inputMessage, setInputMessage] = useState(""); // Wiadomość użytkownika
-    const [loading, setLoading] = useState(false); // Stan ładowania
-    const chatContainerRef = useRef(null); // Referencja do kontenera czatu
+    const [messages, setMessages] = useState([]);
+    const [inputMessage, setInputMessage] = useState("");
+    const [loading, setLoading] = useState(false);
+    const chatContainerRef = useRef(null);
 
-    // Funkcja wysyłania wiadomości
     const sendMessage = async () => {
-        if (!inputMessage.trim()) return; // Jeśli wiadomość jest pusta, nic nie wysyłamy
+        if (!inputMessage.trim()) return;
 
-        // Dodaj wiadomość użytkownika do historii
         setMessages((prevMessages) => [
             ...prevMessages,
             { role: "user", content: inputMessage },
         ]);
         setLoading(true);
-        setInputMessage(""); // Czyści pole wejściowe
+        setInputMessage("");
 
         try {
             const response = await fetch("http://localhost:5000/chat", { 
@@ -25,35 +23,32 @@ function AssistantPage() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ message: inputMessage, history: messages }), // Przesyłamy wiadomość i historię
+                body: JSON.stringify({ message: inputMessage, history: messages }),
             });
 
             const data = await response.json();
             setMessages((prevMessages) => [
                 ...prevMessages,
-                { role: "assistant", content: data.reply }, // Dodaj odpowiedź asystenta do historii
+                { role: "assistant", content: data.reply },
             ]);
         } catch (error) {
-            console.error("Błąd:", error); // Logujemy błędy
+            console.error("Błąd:", error);
         } finally {
             setLoading(false);
         }
     };
 
-    // Funkcja do przewijania czatu na dół
     const scrollToBottom = () => {
         const chatContainer = chatContainerRef.current;
         if (chatContainer) {
-            chatContainer.scrollTop = chatContainer.scrollHeight; // Przewija na dół
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
     };
 
-    // Automatyczne przewijanie czatu po każdej nowej wiadomości
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
 
-    // Obsługa wysyłania wiadomości po naciśnięciu Enter
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && !loading) {
             sendMessage();

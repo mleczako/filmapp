@@ -41,7 +41,7 @@ function MovieCard({ movie }) {
     };
 
     return (
-        <div className={movie-card ${highlighted ? "highlight" : ""}} onClick={onInfoClick}>
+        <div className={`movie-card ${highlighted ? "highlight" : ""}`} onClick={onInfoClick}>
             <img className="poster" src={movie.Poster || ""} alt={movie.Title || "Brak tytułu"} />
             <div>
                 <button className="watched-button" onClick={(e) => {

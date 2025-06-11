@@ -27,7 +27,7 @@ const STAT_TYPES = [
   { key: "genres", label: "Genres" },
   { key: "directors", label: "Directors" },
   { key: "actors", label: "Actors" },
-  { key: "summary", label: "Intresting statistics" },
+  { key: "summary", label: "Interesting statistics" },
 ];
 
 const SORT_TYPES = [

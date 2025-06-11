@@ -18,6 +18,21 @@ body {
   position: relative;
 }
 
+.logout-button {
+  position: absolute;
+  right: 20px;
+  background-color: black;
+  color: red;
+  font-size: medium;
+  border-style: solid;
+  border-color: black;
+  font-weight: 600;
+}
+
+.logout-button:hover {
+  cursor: pointer;
+}
+
 .navbar-logo {
   height: 80px;
   width: auto;

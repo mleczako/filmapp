@@ -44,6 +44,7 @@ function MoviesPage() {
 
   return (
     <div>
+      <br />
       <h1>Movies</h1>
       <form onSubmit={onSearchSubmit}>
         <input

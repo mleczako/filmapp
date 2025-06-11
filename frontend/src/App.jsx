@@ -49,7 +49,7 @@ function App() {
           <Link to="/watched">Watched</Link>
           <Link to="/assistant">Film Assistant</Link>
           <Link to="/stats">Stats</Link>
-          <button onClick={handleLogout}>Log out</button>
+          <button className="logout-button" onClick={handleLogout}>Log out</button>
         </nav>
         <main>
           <Routes>

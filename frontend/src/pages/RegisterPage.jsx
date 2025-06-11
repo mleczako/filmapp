@@ -81,7 +81,7 @@ function RegisterPage() {
                 </div>
                 <br />
                 <button className="register-button" type="submit" disabled={loading}>
-                    {loading ? 'Registering...' : 'Register'}
+                    Register
                 </button>
             </form>
         </div>

@@ -77,7 +77,7 @@ function LoginPage({ onLogin }) {
                 </div>
                 <br />
                 <button type="submit" disabled={loading} className='log-in-button'>
-                    {loading ? 'Logging in...' : 'Log in'}
+                    Log in
                 </button>
             </form>
         </div>

@@ -8,11 +8,13 @@ import RegisterPage from "./pages/RegisterPage";
 import AssistantPage from "./pages/AssistantPage";
 import StatsPage from "./pages/StatsPage";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import logo from "./assets/logo_no_background.png";
 
 function App() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const savedUser = localStorage.getItem("filmapp_user");
@@ -40,6 +42,7 @@ function App() {
     return (
       <div>
         <nav className="navbar">
+          <img src={logo} alt="Logo" className="navbar-logo" />
           <Link reloadDocument to="/">
             Home
           </Link>
@@ -63,9 +66,15 @@ function App() {
   return (
     <div>
       <nav className="navbar">
+        <img src={logo} alt="Logo" className="navbar-logo" />
         <Link to="/login">Log in</Link>
         <Link to="/register">Register</Link>
       </nav>
+      {location.pathname === "/" && (
+        <div className="logo-container">
+          <img src={logo} alt="Logo" className="app-logo" />
+        </div>
+      )}
       <main>
         <Routes>
           <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
@@ -77,39 +86,3 @@ function App() {
 }
 
 export default App;
-
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
-
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <div>
-//         <a href="https://vite.dev" target="_blank">
-//           <img src={viteLogo} className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Vite + React</h1>
-//       <div className="card">
-//         <button onClick={() => setCount((count) => count + 1)}>
-//           count is {count}
-//         </button>
-//         <p>
-//           Edit <code>src/App.jsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </>
-//   )
-// }
-
-// export default App

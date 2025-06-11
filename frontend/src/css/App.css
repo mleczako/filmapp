@@ -15,6 +15,26 @@ body {
   flex-wrap: wrap;
   gap: 30px;
   height: 60px;
+  position: relative;
+}
+
+.navbar-logo {
+  height: 80px;
+  width: auto;
+  position: absolute;
+  left: 10px;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.app-logo {
+  max-width: 1000px;
+  height: auto;
 }
 
 /* #root {

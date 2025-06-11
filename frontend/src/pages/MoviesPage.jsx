@@ -20,7 +20,7 @@ function MoviesPage() {
       setError(null);
     } catch (err) {
       console.log(err);
-      setError("Błąd podczas ładowania filmów");
+      setError("Error loading movies");
     } finally {
       setLoading(false);
     }
@@ -34,7 +34,7 @@ function MoviesPage() {
         setMovies(fetchedMovies);
       } catch (err) {
         console.log(err);
-        setError("Błąd podczas ładowania filmów");
+        setError("Error loading movies");
       } finally {
         setLoading(false);
       }
@@ -44,24 +44,24 @@ function MoviesPage() {
 
   return (
     <div>
-      <h1>Filmy</h1>
+      <h1>Movies</h1>
       <form onSubmit={onSearchSubmit}>
         <input
           className="search-box"
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Szukaj filmów..."
+          placeholder="Find movie..."
         />
         <button type="submit" className="search-button">
-          Szukaj
+          Find
         </button>
       </form>
 
       {error && <div className="error-message">{error}</div>}
 
       {loading ? (
-        <div>Ładowanie...</div>
+        <div>Loading...</div>
       ) : (
         <div className="movie-grid">
           {movies.map((movie) => (

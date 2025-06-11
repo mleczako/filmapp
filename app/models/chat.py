@@ -1,4 +1,5 @@
 import os
+import re
 from dotenv import load_dotenv
 from openai import AzureOpenAI
 
@@ -34,6 +35,16 @@ def film_chat(user_input, history=None):
 
     except Exception as e:
         return f"Błąd: {e}", history
+
+
+
+def format_movie_response(response):
+    """
+    Funkcja do formatowania odpowiedzi, aby każde wystąpienie 'X.' zaczynało nową linię.
+    """
+    formatted_response = re.sub(r"(\d+\.)", r"\n\1", response)
+
+    return formatted_response.strip() 
 
 
 if __name__ == "__main__":

@@ -41,12 +41,12 @@ function App() {
       <div>
         <nav className="navbar">
           <Link reloadDocument to="/">
-            Strona główna
+            Home
           </Link>
-          <Link to="/watched">Obejrzane</Link>
-          <Link to="/assistant">Asystent Filmowy</Link>
-          <Link to="/stats">Statystyki</Link>
-          <button onClick={handleLogout}>Wyloguj się</button>
+          <Link to="/watched">Watched</Link>
+          <Link to="/assistant">Film Assistant</Link>
+          <Link to="/stats">Stats</Link>
+          <button onClick={handleLogout}>Log out</button>
         </nav>
         <main>
           <Routes>
@@ -63,8 +63,8 @@ function App() {
   return (
     <div>
       <nav className="navbar">
-        <Link to="/login">Logowanie</Link>
-        <Link to="/register">Rejestracja</Link>
+        <Link to="/login">Log in</Link>
+        <Link to="/register">Register</Link>
       </nav>
       <main>
         <Routes>

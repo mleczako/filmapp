@@ -18,7 +18,7 @@ function WatchedPage() {
     axios
       .get(`http://localhost:5000/api/watched/?user_id=${userId}`)
       .then((res) => setWatched(res.data))
-      .catch((err) => console.error("Błąd pobierania obejrzanych:", err));
+      .catch((err) => console.error("Error loading watched movies:", err));
   }, []);
 
   const handleRatingChange = async (newRating, movieId) => {
@@ -31,7 +31,7 @@ function WatchedPage() {
       );
       setEditId(null);
     } catch (err) {
-      alert("Błąd aktualizacji oceny");
+      alert("Error updating rating");
     }
   };
 
@@ -40,7 +40,7 @@ function WatchedPage() {
       await axios.delete(`http://localhost:5000/api/watched/${id}`);
       setWatched((prev) => prev.filter((m) => m.id !== id));
     } catch (err) {
-      alert("Błąd usuwania filmu");
+      alert("Error deleting movie");
     }
   };
 
@@ -66,19 +66,19 @@ function WatchedPage() {
 
   return (
     <div>
-      <h1>Obejrzane filmy</h1>
+      <h1>Watched movies</h1>
       <div style={{ marginBottom: 16 }}>
-        Sortuj po:&nbsp;
+        Sort by:&nbsp;
         <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-          <option value="date">Dacie dodania</option>
-          <option value="title">Tytule</option>
-          <option value="rating">Ocenie</option>
+          <option value="date">Date added</option>
+          <option value="title">Title</option>
+          <option value="rating">Rating</option>
         </select>
         &nbsp;
         <button
           onClick={() => setSortOrder((o) => (o === "asc" ? "desc" : "asc"))}
         >
-          {sortOrder === "asc" ? "⬆️ Rosnąco" : "⬇️ Malejąco"}
+          {sortOrder === "asc" ? "⬆️ Ascending" : "⬇️ Descending"}
         </button>
       </div>
       <ul>
@@ -100,11 +100,11 @@ function WatchedPage() {
               starSpacing="2px"
             />
             {editId === movie.id ? (
-              <button onClick={() => setEditId(null)}>Anuluj</button>
+              <button onClick={() => setEditId(null)}>Cancel</button>
             ) : (
-              <button onClick={() => setEditId(movie.id)}>✏️ Edytuj</button>
+              <button onClick={() => setEditId(movie.id)}>✏️ Edit</button>
             )}
-            <button onClick={() => handleDelete(movie.id)}>🗑️ Usuń</button>
+            <button onClick={() => handleDelete(movie.id)}>🗑️ Delete</button>
           </li>
         ))}
       </ul>

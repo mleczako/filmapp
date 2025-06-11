@@ -33,21 +33,21 @@ function RegisterPage() {
             setMessage(response.data.message);
             setFormData({ username: '', password: '' });
         } catch (err) {
-            setError(err.response?.data?.error || 'Wystąpił błąd podczas rejestracji');
+            setError(err.response?.data?.error || 'Error register');
         } finally {
             setLoading(false);
         }
     };
     return (
         <div>
-            <h2>Zarejestruj sie</h2>
+            <h2>Register</h2>
 
             {message && <div>{message}</div>}
             {error && <div>{error}</div>}
 
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="username">Nazwa użytkownika:</label>
+                    <label htmlFor="username">Username:</label>
                     <input
                         type="text"
                         id="username"
@@ -55,12 +55,12 @@ function RegisterPage() {
                         value={formData.username}
                         onChange={handleChange}
                         required
-                        placeholder="Wprowadź nazwę użytkownika"
+                        placeholder="Enter username"
                     />
                 </div>
 
                 <div>
-                    <label htmlFor="password">Hasło:</label>
+                    <label htmlFor="password">Password:</label>
                     <input
                         type="password"
                         id="password"
@@ -68,13 +68,13 @@ function RegisterPage() {
                         value={formData.password}
                         onChange={handleChange}
                         required
-                        placeholder="Wprowadź hasło"
+                        placeholder="Enter password"
                         minLength="6"
                     />
                 </div>
 
                 <button type="submit" disabled={loading}>
-                    {loading ? 'Rejestrowanie...' : 'Zarejestruj się'}
+                    {loading ? 'Registering...' : 'Register'}
                 </button>
             </form>
         </div>

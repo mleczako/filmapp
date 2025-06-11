@@ -32,7 +32,7 @@ function AssistantPage() {
                 { role: "assistant", content: data.reply },
             ]);
         } catch (error) {
-            console.error("Błąd:", error);
+            console.error("ERROR:", error);
         } finally {
             setLoading(false);
         }
@@ -58,19 +58,22 @@ function AssistantPage() {
     return (
         <div className="assistant-page">
             <div className="chat-container">
-                <h1>Asystent Filmowy</h1>
+                <h1>Film Assistant</h1>
                 <div 
                     ref={chatContainerRef} 
                     className="chat-box"
                 >
                     {messages.map((msg, index) => (
                         <div key={index} className={`message ${msg.role}`}>
-                            <strong>{msg.role === "user" ? "Ty:" : "GPT:"}</strong> {msg.content}
+                            <strong>{msg.role === "user" ? "You:" : "GPT:"}</strong>
+                            {msg.content.split("\n").map((line, idx) => (
+                                <div key={idx}>{line}</div>
+                            ))}
                         </div>
                     ))}
                     {loading && (
                         <div className="message assistant">
-                            <strong>GPT:</strong> <em>Pisze odpowiedź...</em>
+                            <strong>GPT:</strong> <em>Responding...</em>
                         </div>
                     )}
                 </div>
@@ -81,10 +84,10 @@ function AssistantPage() {
                         onChange={(e) => setInputMessage(e.target.value)}
                         onKeyPress={handleKeyPress}
                         disabled={loading}
-                        placeholder="Wpisz wiadomość..."
+                        placeholder="Type a message..."
                     />
                     <button onClick={sendMessage} disabled={loading}>
-                        {loading ? "Ładowanie..." : "Wyślij"}
+                        {loading ? "Loading..." : "Send"}
                     </button>
                 </div>
             </div>

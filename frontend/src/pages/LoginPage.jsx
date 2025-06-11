@@ -31,7 +31,7 @@ function LoginPage({ onLogin }) {
             onLogin(response.data.user);
             setFormData({ username: '', password: '' });
         } catch (err) {
-            setError(err.response?.data?.error || 'Wystąpił błąd podczas logowania');
+            setError(err.response?.data?.error || 'Error logging in');
         } finally {
             setLoading(false);
         }
@@ -39,13 +39,13 @@ function LoginPage({ onLogin }) {
 
     return (
         <div>
-            <h2>Zaloguj sie</h2>
+            <h2>Log in</h2>
 
             {error && <div>{error}</div>}
 
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="username">Nazwa użytkownika:</label>
+                    <label htmlFor="username">Username:</label>
                     <input
                         type="text"
                         id="username"
@@ -53,11 +53,11 @@ function LoginPage({ onLogin }) {
                         value={formData.username}
                         onChange={handleChange}
                         required
-                        placeholder="Wprowadź nazwę użytkownika"
+                        placeholder="Enter username"
                     />
                 </div>
                 <div>
-                    <label htmlFor="password">Hasło:</label>
+                    <label htmlFor="password">Password:</label>
                     <input
                         type="password"
                         id="password"
@@ -65,12 +65,12 @@ function LoginPage({ onLogin }) {
                         value={formData.password}
                         onChange={handleChange}
                         required
-                        placeholder="Wprowadź hasło"
+                        placeholder="Enter password"
                     />
                 </div>
 
                 <button type="submit" disabled={loading}>
-                    {loading ? 'Logowanie...' : 'Zaloguj się'}
+                    {loading ? 'Logging in...' : 'Log in'}
                 </button>
             </form>
         </div>

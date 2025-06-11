@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const STAT_TYPES = [
-  { key: "genres", label: "Gatunki" },
-  { key: "directors", label: "Reżyserzy" },
-  { key: "actors", label: "Aktorzy" },
-  { key: "summary", label: "Najciekawsze statystyki" },
+  { key: "genres", label: "Genres" },
+  { key: "directors", label: "Directors" },
+  { key: "actors", label: "Actors" },
+  { key: "summary", label: "Intresting statistics" },
 ];
 
 const SORT_TYPES = [
-  { key: "count", label: "Najwięcej filmów" },
-  { key: "avg", label: "Najwyższa średnia ocena" },
+  { key: "count", label: "Most movies" },
+  { key: "avg", label: "Highest average rating" },
 ];
 
 function StatsPage() {
@@ -172,7 +172,7 @@ function StatsPage() {
     };
   };
 
-  if (loading) return <div>Ładowanie statystyk...</div>;
+  if (loading) return <div>Stats loading...</div>;
 
   let statsArr = [];
   let statsObj = {};
@@ -224,7 +224,7 @@ function StatsPage() {
           ))}
         </ul>
         <button className="close-list-btn" onClick={() => setSelected(null)}>
-          Zamknij listę
+          Close list
         </button>
       </div>
     );
@@ -316,45 +316,45 @@ function StatsPage() {
     return (
       <div>
         <div style={styles.summaryBox}>
-          <div style={styles.summaryTitle}>Najczęściej oglądany gatunek:</div>
+          <div style={styles.summaryTitle}>Most viewed genre:</div>
           {topGenre ? (
             <span>
               <b>{topGenre.key}</b> ({topGenre.count}{" "}
               {filmLabel(topGenre.count)}, {topGenre.runtime} min)
             </span>
           ) : (
-            "Brak danych"
+            "No data"
           )}
         </div>
         <div style={styles.summaryBox}>
-          <div style={styles.summaryTitle}>Najczęściej oglądany reżyser:</div>
+          <div style={styles.summaryTitle}>Most viewed director:</div>
           {topDirector ? (
             <span>
               <b>{topDirector.key}</b> ({topDirector.count}{" "}
               {filmLabel(topDirector.count)}, {topDirector.runtime} min)
             </span>
           ) : (
-            "Brak danych"
+            "No data"
           )}
         </div>
         <div style={styles.summaryBox}>
-          <div style={styles.summaryTitle}>Najczęściej oglądany aktor:</div>
+          <div style={styles.summaryTitle}>Most viewed actor:</div>
           {topActor ? (
             <span>
               <b>{topActor.key}</b> ({topActor.count}{" "}
               {filmLabel(topActor.count)}, {topActor.runtime} min)
             </span>
           ) : (
-            "Brak danych"
+            "No data"
           )}
         </div>
         <div style={styles.summaryBox}>
           <div style={styles.summaryTitle}>
-            Najwyżej oceniany gatunek (min. 2 filmy):
+            Highest rated genre (min. 2 movies):
           </div>
           {bestGenre ? (
             <span>
-              <b>{bestGenre.key}</b> (średnia ocena: {bestGenre.avg.toFixed(2)})
+              <b>{bestGenre.key}</b> (Average: {bestGenre.avg.toFixed(2)})
             </span>
           ) : (
             "Brak danych"
@@ -362,33 +362,33 @@ function StatsPage() {
         </div>
         <div style={styles.summaryBox}>
           <div style={styles.summaryTitle}>
-            Najwyżej oceniany reżyser (min. 2 filmy):
+            Highest rated director (min. 2 movies):
           </div>
           {bestDirector ? (
             <span>
-              <b>{bestDirector.key}</b> (średnia ocena:{" "}
+              <b>{bestDirector.key}</b> (Average:{" "}
               {bestDirector.avg.toFixed(2)})
             </span>
           ) : (
-            "Brak danych"
+            "No data"
           )}
         </div>
         <div style={styles.summaryBox}>
           <div style={styles.summaryTitle}>
-            Najwyżej oceniany aktor (min. 2 filmy):
+            Highest rated actor (min. 2 movies):
           </div>
           {bestActor ? (
             <span>
-              <b>{bestActor.key}</b> (średnia ocena: {bestActor.avg.toFixed(2)})
+              <b>{bestActor.key}</b> (Average: {bestActor.avg.toFixed(2)})
             </span>
           ) : (
-            "Brak danych"
+            "No data"
           )}
         </div>
         <div style={styles.summaryBox}>
-          <div style={styles.summaryTitle}>Łączny czas oglądania:</div>
+          <div style={styles.summaryTitle}>Total viewing time:</div>
           <span>
-            <b>{totalRuntime}</b> minut
+            <b>{totalRuntime}</b> minutes
           </span>
         </div>
       </div>
@@ -397,10 +397,10 @@ function StatsPage() {
 
   // Funkcja do poprawnej odmiany słowa "film"
   function filmLabel(count) {
-    if (count === 1) return "film";
+    if (count === 1) return "movie";
     if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100))
-      return "filmy";
-    return "filmów";
+      return "movies";
+    return "movies";
   }
 
   return (
@@ -412,7 +412,7 @@ function StatsPage() {
         alignItems: "center",
       }}
     >
-      <h1 style={{ color: "#1976d2" }}>Statystyki obejrzanych filmów</h1>
+      <h1 style={{ color: "#1976d2" }}>Watched movies stats</h1>
       <div style={{ marginBottom: 16 }}>
         {STAT_TYPES.map((type) => (
           <button
@@ -429,7 +429,7 @@ function StatsPage() {
       </div>
       {statType !== "summary" && (
         <div style={{ marginBottom: 16 }}>
-          Sortuj według:{" "}
+          Sort by:{" "}
           {SORT_TYPES.map((type) => (
             <button
               key={type.key}
@@ -467,7 +467,7 @@ function StatsPage() {
                     {item.key}
                   </button>
                   <span>
-                    {item.count} {filmLabel(item.count)}, średnia ocena:{" "}
+                    {item.count} {filmLabel(item.count)}, Average rating:{" "}
                     {item.avg.toFixed(2)}, {item.runtime} min
                   </span>
                 </li>

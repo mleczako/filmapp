@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import StarRatings from "react-star-ratings";
+import "../css/WatchedPage.css";
 
 function WatchedPage() {
   const [watched, setWatched] = useState([]);
@@ -81,35 +82,40 @@ function WatchedPage() {
           {sortOrder === "asc" ? "⬆️ Ascending" : "⬇️ Descending"}
         </button>
       </div>
-      <ul>
+       <div className="movie-list">
         {sortedWatched.map((movie) => (
-          <li key={movie.id}>
-            <strong>{movie.title}</strong> –
-            <StarRatings
-              rating={movie.rating || 0}
-              starRatedColor="gold"
-              starHoverColor="orange"
-              changeRating={(rating) =>
-                editId === movie.id
-                  ? handleRatingChange(rating, movie.id)
-                  : null
-              }
-              numberOfStars={5}
-              name={`rating-${movie.id}`}
-              starDimension="24px"
-              starSpacing="2px"
-            />
-            {editId === movie.id ? (
-              <button onClick={() => setEditId(null)}>Cancel</button>
-            ) : (
-              <button onClick={() => setEditId(movie.id)}>✏️ Edit</button>
-            )}
-            <button onClick={() => handleDelete(movie.id)}>🗑️ Delete</button>
-          </li>
+          <div className="movie-row" key={movie.id}>
+            <div className="movie-title">
+              <strong>{movie.title}</strong>
+            </div>
+            <div className="movie-stars">
+              <StarRatings
+                rating={movie.rating || 0}
+                starRatedColor="gold"
+                starHoverColor="orange"
+                changeRating={(rating) =>
+                  editId === movie.id
+                    ? handleRatingChange(rating, movie.id)
+                    : null
+                }
+                numberOfStars={5}
+                name={`rating-${movie.id}`}
+                starDimension="22px"
+                starSpacing="2px"
+              />
+            </div>
+            <div className="movie-buttons">
+              {editId === movie.id ? (
+                <button onClick={() => setEditId(null)}>Cancel</button>
+              ) : (
+                <button onClick={() => setEditId(movie.id)}>✏️ Edit</button>
+              )}
+              <button onClick={() => handleDelete(movie.id)}>🗑️ Delete</button>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
-
 export default WatchedPage;

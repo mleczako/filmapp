@@ -12,6 +12,7 @@
     height: 40px;
     padding-left: 10px;
     background-color: black;
+    color: white;
 }
 
 .search-button {
@@ -21,6 +22,7 @@
     background-color: black;
     border: solid;
     border-width: 0px;
+    color: white;
 }
 
 .search-button:hover {

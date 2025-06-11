@@ -38,6 +38,7 @@
     border-bottom-left-radius: 25px;
     border-top-right-radius: 15px;
     border-color: transparent;
+    color: white;
 }
 
 .watched-button:hover {
@@ -46,7 +47,7 @@
 }
 
 .movie-card.highlight {
-  border: 3px solid limegreen;
-  box-shadow: 0 0 15px limegreen;
-  transition: box-shadow 0.5s ease, border 0.5s ease;
+    border: 3px solid limegreen;
+    box-shadow: 0 0 15px limegreen;
+    transition: box-shadow 0.5s ease, border 0.5s ease;
 }

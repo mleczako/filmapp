@@ -1,0 +1,51 @@
+.movie-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.movie-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.07);
+  padding: 14px 18px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.movie-row:hover {
+  transform: scale(1.01);
+}
+
+.movie-title {
+  text-align: left;
+  font-size: 1.05em;
+  word-break: break-word;
+}
+
+.movie-stars {
+  text-align: center;
+}
+
+.movie-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+button {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-size: 0.9em;
+}
+
+button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}

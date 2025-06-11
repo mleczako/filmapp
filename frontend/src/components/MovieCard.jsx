@@ -2,13 +2,16 @@ import axios from "axios";
 import "../css/MovieCard.css";
 import { useState } from "react";
 import StarRatings from "react-star-ratings";
+import { useNavigate } from "react-router-dom";
 
 function MovieCard({ movie }) {
   const [showRating, setShowRating] = useState(false);
   const [highlighted, setHighlighted] = useState(false);
+  const navigate = useNavigate();
 
   const onInfoClick = () => {
     //alert("info clik");
+    navigate(`/${movie.imdbID}`)
   };
 
   const handleRatingSelect = async (rating) => {
@@ -50,7 +53,7 @@ function MovieCard({ movie }) {
       onClick={onInfoClick}
     >
       <img
-        className="poster"
+        className="poster-card"
         src={movie.Poster || ""}
         alt={movie.Title || "Brak tytułu"}
       />
@@ -65,7 +68,7 @@ function MovieCard({ movie }) {
           <h4>add to watched</h4>
         </button>
         {showRating && (
-          <div className="rating-stars">
+          <div className="rating-stars" onClick={(e) => (e.stopPropagation())}>
             <StarRatings
               rating={0}
               starRatedColor="gold"
@@ -79,7 +82,7 @@ function MovieCard({ movie }) {
           </div>
         )}
       </div>
-      <h3 className="title">{movie.Title || "Brak tytułu"}</h3>
+      <h3 className="title-card">{movie.Title || "Brak tytułu"}</h3>
       <h5>{movie.Year || "Brak daty"}</h5>
     </div>
   );

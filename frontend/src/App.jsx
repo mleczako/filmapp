@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AssistantPage from "./pages/AssistantPage";
 import StatsPage from "./pages/StatsPage";
+import MovieDetailsPage from "./pages/MovieDetailsPage";
 import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "./assets/logo_no_background.png";
@@ -57,6 +58,7 @@ function App() {
             <Route path="/watched" element={<WatchedMoviesPage />} />
             <Route path="/assistant" element={<AssistantPage />} />
             <Route path="/stats" element={<StatsPage />} />
+            <Route path="/:id" element={<MovieDetailsPage />} />
           </Routes>
         </main>
       </div>

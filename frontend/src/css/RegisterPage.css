@@ -3,6 +3,7 @@
     ;
     margin: 0 auto;
     padding-top: 40px;
+    padding-bottom: 60px;
     width: 500px;
     border-style: solid;
     border-radius: 20px;
@@ -18,7 +19,6 @@
     border: solid;
     border-width: 0px;
     color: white;
-    margin-bottom: 60px;
 }
 
 .register-button:hover {

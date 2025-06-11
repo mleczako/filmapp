@@ -1,0 +1,36 @@
+.details-box {
+    background-color: rgba(0, 0, 0, 0.274);
+    ;
+    margin: 0 100px auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: black;
+    margin-top: 60px;
+    display: flex;
+    margin-bottom: 80px;
+}
+
+.details-box2 {
+    padding: 20px;
+    text-align: left;
+}
+
+.poster-det {
+    padding-top: 60px;
+    padding-bottom: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+    width: 240px;
+    height: 390px;
+}
+
+.detail-label {
+    font-weight: bold;
+    display: inline;
+}
+
+.title-label {
+    font-size: xx-large;
+}

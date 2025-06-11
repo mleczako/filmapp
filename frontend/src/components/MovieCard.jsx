@@ -8,7 +8,7 @@ function MovieCard({ movie }) {
   const [highlighted, setHighlighted] = useState(false);
 
   const onInfoClick = () => {
-    alert("info clik");
+    //alert("info clik");
   };
 
   const handleRatingSelect = async (rating) => {
@@ -62,7 +62,7 @@ function MovieCard({ movie }) {
             setShowRating(!showRating);
           }}
         >
-          <h4>dodaj do obejrzanych</h4>
+          <h4>add to watched</h4>
         </button>
         {showRating && (
           <div className="rating-stars">

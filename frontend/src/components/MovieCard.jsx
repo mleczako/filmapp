@@ -79,6 +79,7 @@ function MovieCard({ movie, watchedList = [], searchQuery }) {
             watched
           </button>
         ) : (
+      <>
         <button
           className="watched-button"
           onClick={(e) => {
@@ -89,7 +90,7 @@ function MovieCard({ movie, watchedList = [], searchQuery }) {
           <h4>add to watched</h4>
         </button>
         {showRating && (
-          <div className="rating-stars" onClick={(e) => (e.stopPropagation())}>
+          <div className="rating-stars" onClick={(e) => e.stopPropagation()}>
             <StarRatings
               rating={0}
               starRatedColor="gold"
@@ -102,6 +103,8 @@ function MovieCard({ movie, watchedList = [], searchQuery }) {
             />
           </div>
         )}
+        </>
+      )}
       </div>
       <h3 className="title-card">{movie.Title || "Brak tytułu"}</h3>
       <h5>{movie.Year || "Brak daty"}</h5>

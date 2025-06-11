@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import "../css/RegisterPage.css"
 
 function RegisterPage() {
     const [formData, setFormData] = useState({
@@ -39,8 +40,10 @@ function RegisterPage() {
         }
     };
     return (
-        <div>
+        <div className='register-box'>
             <h2>Register</h2>
+            <p>Already have an account? <a href='/login'>Login here</a> </p>
+            <br />
 
             {message && <div>{message}</div>}
             {error && <div>{error}</div>}
@@ -48,7 +51,9 @@ function RegisterPage() {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="username">Username:</label>
+                    <br />
                     <input
+                        className='register-textfield'
                         type="text"
                         id="username"
                         name="username"
@@ -58,10 +63,12 @@ function RegisterPage() {
                         placeholder="Enter username"
                     />
                 </div>
-
+                <br />
                 <div>
                     <label htmlFor="password">Password:</label>
+                    <br />
                     <input
+                        className='register-textfield'
                         type="password"
                         id="password"
                         name="password"
@@ -72,8 +79,8 @@ function RegisterPage() {
                         minLength="6"
                     />
                 </div>
-
-                <button type="submit" disabled={loading}>
+                <br />
+                <button className="register-button" type="submit" disabled={loading}>
                     {loading ? 'Registering...' : 'Register'}
                 </button>
             </form>

@@ -215,20 +215,20 @@ function StatsPage() {
   const renderSelectedMovies = () => {
     if (!selected) return null;
     const idxs = statsObj[selected]?.idxs || [];
-    if (idxs.length === 0) return <div>Brak filmów.</div>;
+    if (idxs.length === 0) return <div>No movies.</div>;
     return (
       <div className="selected-movies-list">
         <h3 className="selected-movies-title">
-          Filmy z {statType === "genres" && "gatunku"}
-          {statType === "directors" && "reżyserem"}
-          {statType === "actors" && "aktorem"}: <b>{selected}</b>
+          Movies with {statType === "genres" && "genre"}
+          {statType === "directors" && "director"}
+          {statType === "actors" && "actor"}: <b>{selected}</b>
         </h3>
         <ul style={{ padding: 0 }}>
           {idxs.map((idx) => (
             <li key={watched[idx].id} className="movie-list-item">
               <strong>{watched[idx].title}</strong>
               {details[idx] && details[idx].Year && <> ({details[idx].Year})</>}
-              {" – ocena: "}
+              {" – rating: "}
               {watched[idx].rating}
             </li>
           ))}
@@ -581,7 +581,7 @@ function StatsPage() {
           marginTop: 0,
           marginBottom: 24,
           fontWeight: "bold",
-          fontSize: 32,
+          fontSize: 24,
         }}
       >
         Watched movies stats

@@ -4,10 +4,17 @@ import { useState } from "react";
 import StarRatings from "react-star-ratings";
 import { useNavigate } from "react-router-dom";
 
-function MovieCard({ movie, searchQuery }) {
+function MovieCard({ movie, watchedList = [], searchQuery }) {
   const [showRating, setShowRating] = useState(false);
   const [highlighted, setHighlighted] = useState(false);
+  const [isWatched, setIsWatched] = useState(false);
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const alreadyWatched = watchedList.some((m) => m.title === movie.Title);
+    setIsWatched(alreadyWatched);
+  }, [watchedList, movie.Title]);
 
   const onInfoClick = () => {
     //alert("info clik");
@@ -42,12 +49,18 @@ function MovieCard({ movie, searchQuery }) {
         }
       );
       setShowRating(false);
+      setIsWatched(true);
       setHighlighted(true);
-      setTimeout(() => setHighlighted(false), 3000);
+      setTimeout(() => setHighlighted(false), 2000);
     } catch (error) {
+      if (error.response && error.response.status === 409) {
+        setIsWatched(true);
+        setShowRating(false);
+      } else {
       console.error("Błąd dodawania:", error);
       alert("Błąd dodawania filmu");
     }
+    }   
   };
 
   return (
@@ -61,6 +74,11 @@ function MovieCard({ movie, searchQuery }) {
         alt={movie.Title || "Brak tytułu"}
       />
       <div>
+        {isWatched ? (
+          <button className="watched-button watched-label" disabled>
+            watched
+          </button>
+        ) : (
         <button
           className="watched-button"
           onClick={(e) => {

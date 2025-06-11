@@ -4,14 +4,17 @@ import { useState } from "react";
 import StarRatings from "react-star-ratings";
 import { useNavigate } from "react-router-dom";
 
-function MovieCard({ movie }) {
+function MovieCard({ movie, searchQuery }) {
   const [showRating, setShowRating] = useState(false);
   const [highlighted, setHighlighted] = useState(false);
   const navigate = useNavigate();
 
   const onInfoClick = () => {
     //alert("info clik");
-    navigate(`/${movie.imdbID}`)
+    const state = {
+      searchQuery: searchQuery
+    }
+    navigate(`/${movie.imdbID}`, { state })
   };
 
   const handleRatingSelect = async (rating) => {

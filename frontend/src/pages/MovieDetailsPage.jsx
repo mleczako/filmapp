@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { getMovieById } from "../services/Api";
 import "../css/MovieDetailsPage.css"
@@ -10,7 +10,13 @@ function MovieDetailsPage() {
     const [movie, setMovie] = useState({});
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+    const location = useLocation();
 
+
+    const onBackButtonClick = () => {
+        navigate("/", { state: location.state })
+    }
 
     useEffect(() => {
         const getMovieDetails = async () => {
@@ -30,6 +36,7 @@ function MovieDetailsPage() {
     return (<div>
         <br />
         <h1>Movie Details</h1>
+        <button className="back-button" onClick={onBackButtonClick}>Go Back</button>
         {error && <div className="error-message">{error}</div>}
 
         {loading ? (
@@ -43,32 +50,56 @@ function MovieDetailsPage() {
                 />
             </div>
             <div className="details-box2">
-                <p><p className="title-label">
-                    {movie.Title || "No data"}</p></p>
-                <p><p className="detail-label">Year: </p>
-                    {movie.Year || "No data"}</p>
-                <p><p className="detail-label">Rated: </p>
-                    {movie.Rated || "No data"}</p>
-                <p><p className="detail-label">Released: </p>
-                    {movie.Released || "No data"}</p>
-                <p><p className="detail-label">Runtime: </p>
-                    {movie.Runtime || "No data"}</p>
-                <p><p className="detail-label">Genre: </p>
-                    {movie.Genre || "No data"}</p>
-                <p><p className="detail-label">Director: </p>
-                    {movie.Director || "No data"}</p>
-                <p><p className="detail-label">Writer: </p>
-                    {movie.Writer || "No data"}</p>
-                <p><p className="detail-label">Actors: </p>
-                    {movie.Actors || "No data"}</p>
-                <p><p className="detail-label">Plot: </p>
-                    {movie.Plot || "No data"}</p>
-                <p><p className="detail-label">Country: </p>
-                    {movie.Country || "No data"}</p>
-                <p><p className="detail-label">Awards: </p>
-                    {movie.Awards || "No data"}</p>
-                <p><p className="detail-label">Box Office: </p>
-                    {movie.BoxOffice || "No data"}</p>
+                <p className="title-label">
+                    {movie.Title || "No data"}</p>
+                <p className="detail-label">Year: </p>
+                {movie.Year || "No data"}
+                <br />
+                <br />
+                <p className="detail-label">Rated: </p>
+                {movie.Rated || "No data"}
+                <br />
+                <br />
+                <p className="detail-label">Released: </p>
+                {movie.Released || "No data"}
+                <br />
+                <br />
+                <p className="detail-label">Runtime: </p>
+                {movie.Runtime || "No data"}
+                <br />
+                <br />
+                <p className="detail-label">Genre: </p>
+                {movie.Genre || "No data"}
+                <br />
+                <br />
+                <p className="detail-label">Director: </p>
+                {movie.Director || "No data"}
+                <br />
+                <br />
+                <p className="detail-label">Writer: </p>
+                {movie.Writer || "No data"}
+                <br />
+                <br />
+                <p className="detail-label">Actors: </p>
+                {movie.Actors || "No data"}
+                <br />
+                <br />
+                <p className="detail-label">Plot: </p>
+                {movie.Plot || "No data"}
+                <br />
+                <br />
+                <p className="detail-label">Country: </p>
+                {movie.Country || "No data"}
+                <br />
+                <br />
+                <p className="detail-label">Awards: </p>
+                {movie.Awards || "No data"}
+                <br />
+                <br />
+                <p className="detail-label">Box Office: </p>
+                {movie.BoxOffice || "No data"}
+                <br />
+                <br />
             </div>
         </div>)}
     </div>)

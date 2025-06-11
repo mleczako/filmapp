@@ -7,7 +7,7 @@
     border-style: solid;
     border-radius: 20px;
     border-color: black;
-    margin-top: 60px;
+    margin-top: 30px;
     display: flex;
     margin-bottom: 80px;
 }
@@ -33,4 +33,17 @@
 
 .title-label {
     font-size: xx-large;
+}
+
+.back-button {
+    color: red;
+    background-color: transparent;
+    font-size: medium;
+    border-style: solid;
+    border-color: transparent;
+    font-weight: 600;
+}
+
+.back-button:hover {
+    cursor: pointer;
 }

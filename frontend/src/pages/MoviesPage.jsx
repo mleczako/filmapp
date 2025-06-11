@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
 import { getDefaultMovies, getMoviesBySearch } from "../services/Api";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../css/MoviesPage.css";
 
 function MoviesPage() {
@@ -9,6 +9,7 @@ function MoviesPage() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const location = useLocation();
 
   const onSearchSubmit = async (e) => {
     e.preventDefault();
@@ -24,22 +25,40 @@ function MoviesPage() {
     } finally {
       setLoading(false);
     }
-    setSearchQuery("");
   };
 
   useEffect(() => {
-    const setDefaultMovies = async () => {
-      try {
-        const fetchedMovies = await getDefaultMovies();
-        setMovies(fetchedMovies);
-      } catch (err) {
-        console.log(err);
-        setError("Error loading movies");
-      } finally {
-        setLoading(false);
-      }
-    };
-    setDefaultMovies();
+    const previousSearchQuery = location.state?.searchQuery
+    console.log(previousSearchQuery)
+    if (previousSearchQuery) {
+      const onBackFromDetails = async (previousSearchQuery) => {
+        setLoading(true);
+        try {
+          const fetchedMovies = await getMoviesBySearch(previousSearchQuery);
+          setMovies(fetchedMovies);
+          setError(null);
+        } catch (err) {
+          console.log(err);
+          setError("Error loading movies");
+        } finally {
+          setLoading(false);
+        }
+      };
+      onBackFromDetails(previousSearchQuery)
+    } else {
+      const setDefaultMovies = async () => {
+        try {
+          const fetchedMovies = await getDefaultMovies();
+          setMovies(fetchedMovies);
+        } catch (err) {
+          console.log(err);
+          setError("Error loading movies");
+        } finally {
+          setLoading(false);
+        }
+      };
+      setDefaultMovies();
+    }
   }, []);
 
   return (
@@ -65,9 +84,10 @@ function MoviesPage() {
         <div>Loading...</div>
       ) : (
         <div className="movie-grid">
-          {movies.map((movie) => (
-            <MovieCard movie={movie} key={movie.imdbID} />
-          ))}
+          {movies ? (movies.map((movie) => (
+            <MovieCard movie={movie} searchQuery={searchQuery} key={movie.imdbID} />
+          ))) : <div> No results </div>}
+
         </div>
       )}
     </div>

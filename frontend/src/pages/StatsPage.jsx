@@ -1,5 +1,27 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "../css/StatsPage.css";
+import { Bar, Doughnut } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const STAT_TYPES = [
   { key: "genres", label: "Genres" },
@@ -196,26 +218,14 @@ function StatsPage() {
     if (idxs.length === 0) return <div>Brak filmów.</div>;
     return (
       <div className="selected-movies-list">
-        <h3 style={{ color: "#800080", marginBottom: 16 }}>
+        <h3 className="selected-movies-title">
           Filmy z {statType === "genres" && "gatunku"}
           {statType === "directors" && "reżyserem"}
           {statType === "actors" && "aktorem"}: <b>{selected}</b>
         </h3>
         <ul style={{ padding: 0 }}>
           {idxs.map((idx) => (
-            <li
-              key={watched[idx].id}
-              className="movie-list-item"
-              style={{
-                color: "#1976d2",
-                background: "#e3f0ff",
-                borderRadius: 6,
-                padding: "8px 12px",
-                marginBottom: 6,
-                listStyle: "none",
-                fontWeight: "bold",
-              }}
-            >
+            <li key={watched[idx].id} className="movie-list-item">
               <strong>{watched[idx].title}</strong>
               {details[idx] && details[idx].Year && <> ({details[idx].Year})</>}
               {" – ocena: "}
@@ -230,171 +240,6 @@ function StatsPage() {
     );
   };
 
-  // Stylizacja inline i klasy CSS
-  const styles = {
-    statBtn: (active) => ({
-      marginRight: 8,
-      fontWeight: active ? "bold" : "normal",
-      background: active ? "#1976d2" : "#e3e3e3",
-      color: active ? "#fff" : "#222",
-      border: "none",
-      borderRadius: 6,
-      padding: "8px 16px",
-      cursor: "pointer",
-      transition: "background 0.2s",
-    }),
-    sortBtn: (active) => ({
-      marginRight: 8,
-      fontWeight: active ? "bold" : "normal",
-      background: active ? "#1976d2" : "#e3e3e3",
-      color: active ? "#fff" : "#222",
-      border: "none",
-      borderRadius: 6,
-      padding: "6px 12px",
-      cursor: "pointer",
-      transition: "background 0.2s",
-    }),
-    statList: {
-      listStyle: "none",
-      color: "#1976d2",
-      padding: 0,
-      margin: 0,
-      maxWidth: 600,
-    },
-    statListItem: {
-      background: "#f5f5f5",
-      marginBottom: 8,
-      borderRadius: 6,
-      padding: "10px 16px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-    },
-    statClickable: {
-      background: "none",
-      border: "none",
-      color: "#800080",
-      textDecoration: "underline",
-      cursor: "pointer",
-      font: "inherit",
-      fontWeight: "bold",
-      fontSize: "1em",
-      padding: 0,
-    },
-    summaryBox: {
-      background: "#f5f5f5",
-      color: "#1976d2",
-      borderRadius: 8,
-      padding: 20,
-      marginBottom: 24,
-      boxShadow: "0 1px 6px rgba(0,0,0,0.06)",
-      maxWidth: 600,
-    },
-    summaryTitle: {
-      fontWeight: "bold",
-      fontSize: "1.1em",
-      marginBottom: 8,
-      color: "#800080",
-    },
-  };
-
-  // Najciekawsze statystyki
-  const renderSummary = () => {
-    const { genres, directors, actors, totalRuntime } = getSummaryStats();
-    const topGenre = genres[0];
-    const topDirector = directors[0];
-    const topActor = actors[0];
-    const bestGenre = genres.find((g) => g.count > 1) || genres[0];
-    // Pomijamy N/A dla najlepszego reżysera
-    const bestDirector =
-      directors.find((d) => d.count > 1 && d.key !== "N/A") ||
-      directors.find((d) => d.key !== "N/A") ||
-      directors[0];
-    const bestActor = actors.find((a) => a.count > 1) || actors[0];
-
-    return (
-      <div>
-        <div style={styles.summaryBox}>
-          <div style={styles.summaryTitle}>Most viewed genre:</div>
-          {topGenre ? (
-            <span>
-              <b>{topGenre.key}</b> ({topGenre.count}{" "}
-              {filmLabel(topGenre.count)}, {topGenre.runtime} min)
-            </span>
-          ) : (
-            "No data"
-          )}
-        </div>
-        <div style={styles.summaryBox}>
-          <div style={styles.summaryTitle}>Most viewed director:</div>
-          {topDirector ? (
-            <span>
-              <b>{topDirector.key}</b> ({topDirector.count}{" "}
-              {filmLabel(topDirector.count)}, {topDirector.runtime} min)
-            </span>
-          ) : (
-            "No data"
-          )}
-        </div>
-        <div style={styles.summaryBox}>
-          <div style={styles.summaryTitle}>Most viewed actor:</div>
-          {topActor ? (
-            <span>
-              <b>{topActor.key}</b> ({topActor.count}{" "}
-              {filmLabel(topActor.count)}, {topActor.runtime} min)
-            </span>
-          ) : (
-            "No data"
-          )}
-        </div>
-        <div style={styles.summaryBox}>
-          <div style={styles.summaryTitle}>
-            Highest rated genre (min. 2 movies):
-          </div>
-          {bestGenre ? (
-            <span>
-              <b>{bestGenre.key}</b> (Average: {bestGenre.avg.toFixed(2)})
-            </span>
-          ) : (
-            "Brak danych"
-          )}
-        </div>
-        <div style={styles.summaryBox}>
-          <div style={styles.summaryTitle}>
-            Highest rated director (min. 2 movies):
-          </div>
-          {bestDirector ? (
-            <span>
-              <b>{bestDirector.key}</b> (Average:{" "}
-              {bestDirector.avg.toFixed(2)})
-            </span>
-          ) : (
-            "No data"
-          )}
-        </div>
-        <div style={styles.summaryBox}>
-          <div style={styles.summaryTitle}>
-            Highest rated actor (min. 2 movies):
-          </div>
-          {bestActor ? (
-            <span>
-              <b>{bestActor.key}</b> (Average: {bestActor.avg.toFixed(2)})
-            </span>
-          ) : (
-            "No data"
-          )}
-        </div>
-        <div style={styles.summaryBox}>
-          <div style={styles.summaryTitle}>Total viewing time:</div>
-          <span>
-            <b>{totalRuntime}</b> minutes
-          </span>
-        </div>
-      </div>
-    );
-  };
-
   // Funkcja do poprawnej odmiany słowa "film"
   function filmLabel(count) {
     if (count === 1) return "movie";
@@ -402,6 +247,324 @@ function StatsPage() {
       return "movies";
     return "movies";
   }
+
+  // Przygotuj dane do wykresu kołowego udziału procentowego gatunków
+  const renderSummary = () => {
+    const { genres, directors, actors, totalRuntime } = getSummaryStats();
+    const topGenre = genres[0];
+    const topDirector = directors[0];
+    const topActor = actors[0];
+    const bestGenre = genres.find((g) => g.count > 1) || genres[0];
+    const bestDirector =
+      directors.find((d) => d.count > 1 && d.key !== "N/A") ||
+      directors.find((d) => d.key !== "N/A") ||
+      directors[0];
+    const bestActor = actors.find((a) => a.count > 1) || actors[0];
+
+    // Doughnut chart for genre percentage share
+    const genreLabels = genres.map((g) => g.key);
+    const genreCounts = genres.map((g) => g.count);
+    const doughnutData = {
+      labels: genreLabels,
+      datasets: [
+        {
+          data: genreCounts,
+          backgroundColor: [
+            "#1976d2",
+            "#800080",
+            "#ff9800",
+            "#43a047",
+            "#e53935",
+            "#00838f",
+            "#fbc02d",
+            "#6d4c41",
+            "#8e24aa",
+            "#3949ab",
+          ],
+        },
+      ],
+    };
+    const doughnutOptions = {
+      plugins: {
+        legend: {
+          display: true,
+          position: "bottom",
+          labels: { color: "#222", font: { weight: "bold" } },
+        },
+        title: {
+          display: true,
+          text: "Genre percentage share",
+          color: "#1976d2",
+          font: { size: 18, weight: "bold" },
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              const total = context.dataset.data.reduce((a, b) => a + b, 0);
+              const value = context.parsed;
+              const percent = ((value / total) * 100).toFixed(1);
+              return `${context.label}: ${value} (${percent}%)`;
+            },
+          },
+        },
+      },
+    };
+
+    // Bar chart for top 5 genres by average rating (min. 2 movies)
+    const topGenresByAvg = genres
+      .filter((g) => g.count > 1)
+      .sort((a, b) => b.avg - a.avg)
+      .slice(0, 5);
+    const barData = {
+      labels: topGenresByAvg.map((g) => g.key),
+      datasets: [
+        {
+          label: "Average rating",
+          data: topGenresByAvg.map((g) => g.avg.toFixed(2)),
+          backgroundColor: "#43a047",
+        },
+      ],
+    };
+    const barOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: true,
+          text: "Top 5 genres by average rating",
+          color: "#43a047",
+          font: { size: 18, weight: "bold" },
+        },
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: "#333",
+            font: { weight: "bold" },
+          },
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: "#333",
+            font: { weight: "bold" },
+          },
+        },
+      },
+    };
+
+    return (
+      <div>
+        <div
+          className="summary-box"
+          style={{
+            padding: 0,
+            background: "none",
+            boxShadow: "none",
+            marginBottom: 0,
+          }}
+        >
+          <div
+            style={{
+              background: "#fff",
+              borderRadius: 10,
+              padding: 24,
+              marginBottom: 32,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+              maxWidth: 700,
+            }}
+          >
+            <Doughnut data={doughnutData} options={doughnutOptions} />
+          </div>
+          <div
+            style={{
+              background: "#fff",
+              borderRadius: 10,
+              padding: 24,
+              marginBottom: 32,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+              maxWidth: 700,
+            }}
+          >
+            <Bar data={barData} options={barOptions} />
+          </div>
+        </div>
+        {/* Statystyki w białych boxach */}
+        <div style={{ maxWidth: 700, margin: "0 auto" }}>
+          <div
+            className="summary-box"
+            style={{
+              background: "#fff",
+              borderRadius: 10,
+              padding: 20,
+              marginBottom: 16,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+            }}
+          >
+            <div
+              className="summary-title"
+              style={{ color: "#800080", fontWeight: "bold", fontSize: 18 }}
+            >
+              Most watched genre:
+            </div>
+            {topGenre ? (
+              <span style={{ color: "#1976d2" }}>
+                <b>{topGenre.key}</b> ({topGenre.count}{" "}
+                {filmLabel(topGenre.count)}, {topGenre.runtime} min)
+              </span>
+            ) : (
+              <span style={{ color: "#1976d2" }}>No data</span>
+            )}
+          </div>
+          <div
+            className="summary-box"
+            style={{
+              background: "#fff",
+              borderRadius: 10,
+              padding: 20,
+              marginBottom: 16,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+            }}
+          >
+            <div
+              className="summary-title"
+              style={{ color: "#800080", fontWeight: "bold", fontSize: 18 }}
+            >
+              Most watched director:
+            </div>
+            {topDirector ? (
+              <span style={{ color: "#1976d2" }}>
+                <b>{topDirector.key}</b> ({topDirector.count}{" "}
+                {filmLabel(topDirector.count)}, {topDirector.runtime} min)
+              </span>
+            ) : (
+              <span style={{ color: "#1976d2" }}>No data</span>
+            )}
+          </div>
+          <div
+            className="summary-box"
+            style={{
+              background: "#fff",
+              borderRadius: 10,
+              padding: 20,
+              marginBottom: 16,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+            }}
+          >
+            <div
+              className="summary-title"
+              style={{ color: "#800080", fontWeight: "bold", fontSize: 18 }}
+            >
+              Most watched actor:
+            </div>
+            {topActor ? (
+              <span style={{ color: "#1976d2" }}>
+                <b>{topActor.key}</b> ({topActor.count}{" "}
+                {filmLabel(topActor.count)}, {topActor.runtime} min)
+              </span>
+            ) : (
+              <span style={{ color: "#1976d2" }}>No data</span>
+            )}
+          </div>
+          <div
+            className="summary-box"
+            style={{
+              background: "#fff",
+              borderRadius: 10,
+              padding: 20,
+              marginBottom: 16,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+            }}
+          >
+            <div
+              className="summary-title"
+              style={{ color: "#800080", fontWeight: "bold", fontSize: 18 }}
+            >
+              Highest rated genre (min. 2 movies):
+            </div>
+            {bestGenre ? (
+              <span style={{ color: "#1976d2" }}>
+                <b>{bestGenre.key}</b> (Average: {bestGenre.avg.toFixed(2)})
+              </span>
+            ) : (
+              <span style={{ color: "#1976d2" }}>No data</span>
+            )}
+          </div>
+          <div
+            className="summary-box"
+            style={{
+              background: "#fff",
+              borderRadius: 10,
+              padding: 20,
+              marginBottom: 16,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+            }}
+          >
+            <div
+              className="summary-title"
+              style={{ color: "#800080", fontWeight: "bold", fontSize: 18 }}
+            >
+              Highest rated director (min. 2 movies):
+            </div>
+            {bestDirector ? (
+              <span style={{ color: "#1976d2" }}>
+                <b>{bestDirector.key}</b> (Average:{" "}
+                {bestDirector.avg.toFixed(2)})
+              </span>
+            ) : (
+              <span style={{ color: "#1976d2" }}>No data</span>
+            )}
+          </div>
+          <div
+            className="summary-box"
+            style={{
+              background: "#fff",
+              borderRadius: 10,
+              padding: 20,
+              marginBottom: 16,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+            }}
+          >
+            <div
+              className="summary-title"
+              style={{ color: "#800080", fontWeight: "bold", fontSize: 18 }}
+            >
+              Highest rated actor (min. 2 movies):
+            </div>
+            {bestActor ? (
+              <span style={{ color: "#1976d2" }}>
+                <b>{bestActor.key}</b> (Average: {bestActor.avg.toFixed(2)})
+              </span>
+            ) : (
+              <span style={{ color: "#1976d2" }}>No data</span>
+            )}
+          </div>
+          <div
+            className="summary-box"
+            style={{
+              background: "#fff",
+              borderRadius: 10,
+              padding: 20,
+              marginBottom: 16,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+            }}
+          >
+            <div
+              className="summary-title"
+              style={{ color: "#800080", fontWeight: "bold", fontSize: 18 }}
+            >
+              Total viewing time:
+            </div>
+            <span style={{ color: "#1976d2" }}>
+              <b>{totalRuntime}</b> minutes
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div
@@ -412,7 +575,17 @@ function StatsPage() {
         alignItems: "center",
       }}
     >
-      <h1 style={{ color: "#1976d2" }}>Watched movies stats</h1>
+      <h1
+        style={{
+          color: "#fff",
+          marginTop: 0,
+          marginBottom: 24,
+          fontWeight: "bold",
+          fontSize: 32,
+        }}
+      >
+        Watched movies stats
+      </h1>
       <div style={{ marginBottom: 16 }}>
         {STAT_TYPES.map((type) => (
           <button
@@ -421,7 +594,7 @@ function StatsPage() {
               setStatType(type.key);
               setSelected(null);
             }}
-            style={styles.statBtn(statType === type.key)}
+            className={`stat-btn${statType === type.key ? " active" : ""}`}
           >
             {type.label}
           </button>
@@ -434,7 +607,7 @@ function StatsPage() {
             <button
               key={type.key}
               onClick={() => setSortType(type.key)}
-              style={styles.sortBtn(sortType === type.key)}
+              className={`sort-btn${sortType === type.key ? " active" : ""}`}
             >
               {type.label}
             </button>
@@ -454,14 +627,15 @@ function StatsPage() {
           renderSummary()
         ) : (
           <>
-            <ul style={styles.statList}>
+            <ul className="stat-list">
               {statsArr.map((item) => (
                 <li
                   key={item.key}
-                  style={{ ...styles.statListItem, minWidth: 500 }}
+                  className="stat-list-item"
+                  style={{ minWidth: 500 }}
                 >
                   <button
-                    style={styles.statClickable}
+                    className="stat-clickable"
                     onClick={() => setSelected(item.key)}
                   >
                     {item.key}
@@ -477,34 +651,6 @@ function StatsPage() {
           </>
         )}
       </div>
-      <style>{`
-        .selected-movies-list {
-          background: #fff;
-          border-radius: 8px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-          padding: 20px;
-          margin-top: 24px;
-          max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        .movie-list-item {
-          margin-bottom: 6px;
-        }
-        .close-list-btn {
-          background: #1976d2;
-          color: #fff;
-          border: none;
-          border-radius: 6px;
-          padding: 6px 16px;
-          margin-top: 10px;
-          cursor: pointer;
-          font-weight: bold;
-        }
-        .close-list-btn:hover {
-          background: #1253a2;
-        }
-      `}</style>
     </div>
   );
 }

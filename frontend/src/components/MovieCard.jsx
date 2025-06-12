@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import StarRatings from "react-star-ratings";
 import { useNavigate } from "react-router-dom";
 
-function MovieCard({ movie, searchQuery, watchedList = []  }) {
+function MovieCard({ movie, searchQuery, watchedList = [] }) {
   const [showRating, setShowRating] = useState(false);
   const [highlighted, setHighlighted] = useState(false);
   const [isWatched, setIsWatched] = useState(false);
@@ -53,14 +53,14 @@ function MovieCard({ movie, searchQuery, watchedList = []  }) {
       setHighlighted(true);
       setTimeout(() => setHighlighted(false), 3000);
     } catch (error) {
-     /* if (error.response && error.response.status === 409) {
-        setIsWatched(true);
-        setShowRating(false);
-      } else {*/
+      /* if (error.response && error.response.status === 409) {
+         setIsWatched(true);
+         setShowRating(false);
+       } else {*/
       console.error("Błąd dodawania:", error);
       alert("Błąd dodawania filmu");
     }
-   // }   
+    // }   
   };
 
   return (
@@ -75,20 +75,20 @@ function MovieCard({ movie, searchQuery, watchedList = []  }) {
       />
       <div>
         {isWatched ? (
-          <button className="watched-button watched-label" disabled>
-            watched
+          <button className="watched-label" disabled>
+            <h4>watched</h4>
           </button>
         ) : (
-        <button
-          className="watched-button"
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowRating(!showRating);
-          }}
-        >
-          <h4>add to watched</h4>
-        </button>
-      )}
+          <button
+            className="watched-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowRating(!showRating);
+            }}
+          >
+            <h4>add to watched</h4>
+          </button>
+        )}
         {showRating && (
           <div className="rating-stars" onClick={(e) => e.stopPropagation()}>
             <StarRatings

@@ -56,9 +56,9 @@ Register or log in to your account and enjoy all the application's features!
 
 Project's GitHub: https://github.com/mleczako/filmapp.git
 
--[Liwia Dzikuć](https://github.com/liwiadzz)
--[Maciej Durkalec](https://github.com/maciosdur)
--[Stanisław Kaczmarczyk](https://github.com/stanislawkaczmarek1)
--[Marcin Mleczak](https://github.com/mleczako)
+- [Liwia Dzikuć](https://github.com/liwiadzz)
+- [Maciej Durkalec](https://github.com/maciosdur)
+- [Stanisław Kaczmarek](https://github.com/stanislawkaczmarek1)
+- [Marcin Mleczak](https://github.com/mleczako)
 
 ---

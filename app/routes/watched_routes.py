@@ -2,6 +2,9 @@ from flask import Blueprint, request, jsonify
 #from models import WatchedMovie
 from app.models.watched_movies import WatchedMovie
 from app import db
+from flask import Response
+import csv
+from io import StringIO
 
 watched_bp = Blueprint('watched', __name__, url_prefix="/api/watched")
 
@@ -51,3 +54,26 @@ def delete_movie(movie_id):
         db.session.commit()
         return jsonify({"message": "Film usunięty"}), 200
     return jsonify({"error": "Film nie znaleziony"}), 404
+
+@watched_bp.route("/export", methods=["GET"])
+def export_watched_movies():
+    user_id = request.args.get("user_id")
+    if not user_id:
+        return jsonify({"error": "Brak user_id"}), 400
+
+    movies = db.session.query(WatchedMovie).filter_by(user_id=user_id).all()
+    si = StringIO()
+    cw = csv.writer(si)
+    cw.writerow(['Tytuł', 'Ocena'])
+
+    for movie in movies:
+        cw.writerow([movie.title, movie.rating])
+
+    output = si.getvalue()
+    si.close()
+
+    return Response(
+        output,
+        mimetype='text/csv',
+        headers={'Content-Disposition': 'attachment;filename=watched_movies.csv'}
+    )

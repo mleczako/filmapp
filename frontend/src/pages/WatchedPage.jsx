@@ -36,6 +36,15 @@ function WatchedPage() {
     }
   };
 
+  const handleExport = () => {
+  const storedUser = localStorage.getItem("filmapp_user");
+  if (!storedUser) return;
+  const user = JSON.parse(storedUser);
+  const userId = user.id;
+  window.open(`http://localhost:5000/api/watched/export?user_id=${userId}`, "_blank");
+};
+
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/api/watched/${id}`);
@@ -81,6 +90,10 @@ function WatchedPage() {
         >
           {sortOrder === "asc" ? "⬆️ Ascending" : "⬇️ Descending"}
         </button>
+        <button onClick={handleExport}>
+        📁 Eksportuj do CSV
+        </button>
+
       </div>
        <div className="movie-list">
         {sortedWatched.map((movie) => (

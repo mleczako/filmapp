@@ -11,7 +11,7 @@ export const BASE_URL = `http://www.omdbapi.com/?apikey=${API_KEY}`
 */
 
 export const getDefaultMovies = async () => {
-    const response = await fetch(`${BASE_URL}&s=Avengers`)
+    const response = await fetch(`${BASE_URL}&s=Ronaldo`)
     const data = await response.json()
     return data.Search
 };

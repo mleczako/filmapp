@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
 import { getDefaultMovies, getMoviesBySearch } from "../services/Api";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../css/MoviesPage.css";
 
 function MoviesPage() {
@@ -10,6 +10,7 @@ function MoviesPage() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
 
   const onSearchSubmit = async (e) => {
     e.preventDefault();
@@ -45,6 +46,11 @@ function MoviesPage() {
         }
       };
       onBackFromDetails(previousSearchQuery)
+      const state = {
+        searchQuery: ""
+      }
+      navigate(location.pathname, { state })
+      setSearchQuery(previousSearchQuery)
     } else {
       const setDefaultMovies = async () => {
         try {

@@ -41,7 +41,7 @@ function StatsPage() {
   const [loading, setLoading] = useState(true);
   const [statType, setStatType] = useState("genres");
   const [sortType, setSortType] = useState("count");
-  const [selected, setSelected] = useState(null); // wybrany element (gatunek/reżyser/aktor)
+  const [selected, setSelected] = useState(null); 
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -50,13 +50,13 @@ function StatsPage() {
       const user = JSON.parse(storedUser);
       const userId = user.id;
 
-      // Pobierz obejrzane filmy użytkownika
+      // pobieranie filmow użytkownika
       const res = await axios.get(
         `http://localhost:5000/api/watched/?user_id=${userId}`
       );
       setWatched(res.data);
 
-      // Pobierz szczegóły każdego filmu z OMDB
+      // details filmu z OMDB
       const promises = res.data.map((movie) =>
         axios.get(
           `https://www.omdbapi.com/?t=${encodeURIComponent(
@@ -170,7 +170,6 @@ function StatsPage() {
       idxs: data.idxs,
       runtime: data.runtime,
     }));
-    // N/A na koniec
     const notNA = arr.filter((item) => item.key !== "N/A");
     const na = arr.filter((item) => item.key === "N/A");
     if (sortType === "count") {
@@ -211,7 +210,7 @@ function StatsPage() {
     statsArr = sortStats(statsObj);
   }
 
-  // Wyświetlanie filmów dla wybranego elementu
+  // filmy dla wybranego elementu
   const renderSelectedMovies = () => {
     if (!selected) return null;
     const idxs = statsObj[selected]?.idxs || [];
@@ -240,7 +239,7 @@ function StatsPage() {
     );
   };
 
-  // Funkcja do poprawnej odmiany słowa "film"
+  // admiana słowa "film"
   function filmLabel(count) {
     if (count === 1) return "movie";
     if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100))
@@ -248,7 +247,7 @@ function StatsPage() {
     return "movies";
   }
 
-  // Przygotuj dane do wykresu kołowego udziału procentowego gatunków
+  // dane do wykresu
   const renderSummary = () => {
     const { genres, directors, actors, totalRuntime } = getSummaryStats();
     const topGenre = genres[0];
@@ -263,7 +262,7 @@ function StatsPage() {
       directors[0];
     const bestActor = actors.find((a) => a.count > 1) || actors[0];
 
-    // Doughnut chart for genre percentage share
+    // Doughnut chart
     const genreLabels = genres.map((g) => g.key);
     const genreCounts = genres.map((g) => g.count);
     const doughnutData = {
@@ -312,7 +311,7 @@ function StatsPage() {
       },
     };
 
-    // Bar chart for top 5 genres by average rating (min. 2 movies)
+    // Bar chart
     const topGenresByAvg = genres
       .filter((g) => g.count > 1)
       .sort((a, b) => b.avg - a.avg)

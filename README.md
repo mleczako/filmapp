@@ -6,10 +6,12 @@ We've collaboratively created a web application for Browse movies. After creatin
 
 ## 🛠 **Technologies Used**
 
- - Python 3.11
+ - Python
  - Flask
  - React
  - Neon Postgres
+ - OMDb API
+ - OpenAI API
 
 All required libraries are in the requirements.txt file and the frontend/package.json file
 

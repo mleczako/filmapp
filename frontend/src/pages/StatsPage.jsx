@@ -393,7 +393,6 @@ function StatsPage() {
             <Bar data={barData} options={barOptions} />
           </div>
         </div>
-        {/* Statystyki w białych boxach */}
         <div style={{ maxWidth: 700, margin: "0 auto" }}>
           <div
             className="summary-box"

@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import MovieCard from "../components/MovieCard";
 import { getDefaultMovies, getMoviesBySearch } from "../services/Api";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../css/MoviesPage.css";
 
 function MoviesPage() {
   const [movies, setMovies] = useState([]);
+  const [watchedList, setWatchedList] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -67,6 +69,20 @@ function MoviesPage() {
     }
   }, []);
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem("filmapp_user");
+    if (!storedUser) return;
+
+    const user = JSON.parse(storedUser);
+    const userId = user.id;
+
+    axios
+      .get(`http://localhost:5000/api/watched/?user_id=${userId}`)
+      .then((res) => setWatchedList(res.data))
+      .catch((err) => console.error("Błąd ładowania obejrzanych:", err));
+  }, []);
+
+
   return (
     <div>
       <br />
@@ -90,9 +106,19 @@ function MoviesPage() {
         <div>Loading...</div>
       ) : (
         <div className="movie-grid">
-          {movies ? (movies.map((movie) => (
-            <MovieCard movie={movie} searchQuery={searchQuery} key={movie.imdbID} />
-          ))) : <div> No results </div>}
+          {movies && movies.length > 0 ? (
+            movies.map((movie) => (
+              <MovieCard
+                movie={movie}
+                searchQuery={searchQuery}
+                watchedList={watchedList}
+                key={movie.imdbID}
+              />
+            ))
+          ) : (
+            <div>No results</div>
+          )}
+
 
         </div>
       )}

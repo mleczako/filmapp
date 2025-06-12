@@ -252,11 +252,13 @@ function StatsPage() {
   const renderSummary = () => {
     const { genres, directors, actors, totalRuntime } = getSummaryStats();
     const topGenre = genres[0];
-    const topDirector = directors[0];
+    const topDirector = [...directors].sort((a, b) => b.count - a.count)[0];
     const topActor = actors[0];
     const bestGenre = genres.find((g) => g.count > 1) || genres[0];
     const bestDirector =
-      directors.find((d) => d.count > 1 && d.key !== "N/A") ||
+      [...directors]
+        .filter((d) => d.count > 1 && d.key !== "N/A")
+        .sort((a, b) => b.avg - a.avg)[0] ||
       directors.find((d) => d.key !== "N/A") ||
       directors[0];
     const bestActor = actors.find((a) => a.count > 1) || actors[0];

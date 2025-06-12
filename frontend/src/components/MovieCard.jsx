@@ -1,13 +1,20 @@
 import axios from "axios";
 import "../css/MovieCard.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import StarRatings from "react-star-ratings";
 import { useNavigate } from "react-router-dom";
 
-function MovieCard({ movie, searchQuery }) {
+function MovieCard({ movie, searchQuery, watchedList = []  }) {
   const [showRating, setShowRating] = useState(false);
   const [highlighted, setHighlighted] = useState(false);
+  const [isWatched, setIsWatched] = useState(false);
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const alreadyWatched = watchedList.some((m) => m.title === movie.Title);
+    setIsWatched(alreadyWatched);
+  }, [watchedList, movie.Title]);
 
   const onInfoClick = () => {
     //alert("info clik");
@@ -42,12 +49,18 @@ function MovieCard({ movie, searchQuery }) {
         }
       );
       setShowRating(false);
+      setIsWatched(true);
       setHighlighted(true);
       setTimeout(() => setHighlighted(false), 3000);
     } catch (error) {
+     /* if (error.response && error.response.status === 409) {
+        setIsWatched(true);
+        setShowRating(false);
+      } else {*/
       console.error("Błąd dodawania:", error);
       alert("Błąd dodawania filmu");
     }
+   // }   
   };
 
   return (
@@ -61,6 +74,11 @@ function MovieCard({ movie, searchQuery }) {
         alt={movie.Title || "Brak tytułu"}
       />
       <div>
+        {isWatched ? (
+          <button className="watched-button watched-label" disabled>
+            watched
+          </button>
+        ) : (
         <button
           className="watched-button"
           onClick={(e) => {
@@ -70,8 +88,9 @@ function MovieCard({ movie, searchQuery }) {
         >
           <h4>add to watched</h4>
         </button>
+      )}
         {showRating && (
-          <div className="rating-stars" onClick={(e) => (e.stopPropagation())}>
+          <div className="rating-stars" onClick={(e) => e.stopPropagation()}>
             <StarRatings
               rating={0}
               starRatedColor="gold"

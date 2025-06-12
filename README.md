@@ -62,3 +62,13 @@ Project's GitHub: https://github.com/mleczako/filmapp.git
 - [Marcin Mleczak](https://github.com/mleczako)
 
 ---
+
+## 📸 **Screenshots**
+
+![App Screenshot1](screenshots/movieapp1.png)
+![App Screenshot1](screenshots/movieapp2.png)
+![App Screenshot1](screenshots/movieapp3.png)
+![App Screenshot1](screenshots/movieapp4.png)
+![App Screenshot1](screenshots/movieapp5.png)
+
+---
